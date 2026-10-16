@@ -27,3 +27,28 @@
 - **Task:** Create the prompt log and persist the requested Codex workflow instructions.
 - **Format:** Maintain a chronological, numbered Markdown history containing the exact prompt and concise inferred metadata.
 - **Constraints:** Modify only `AGENTS.md` and `prompt-history.md`; preserve existing Next.js and Prisma configuration; do not expose secrets; do not commit, push, or run migrations.
+
+## 2. Add the WeddingTask model
+
+### Exact prompt
+
+> Add a `WeddingTask` model to `prisma/schema.prisma` with these fields:
+>
+> - `id`: auto-incrementing integer primary key
+> - `title`: required string
+> - `category`: string, default "General"
+> - `status`: string, default "Not Started"
+> - `dueDate`: optional DateTime
+> - `notes`: optional string
+> - `createdAt`: DateTime, default to creation time
+>
+> Preserve the existing Prisma generator and PostgreSQL datasource. Follow `AGENTS.md` and append this prompt to `prompt-history.md`.
+>
+> Modify only those two files. Do not run migrations, generate clients, install packages, or modify the database. Show and explain the diff.
+
+### Inferred details
+
+- **Context:** Extend the existing Prisma 7 PostgreSQL schema with the application's first wedding-planning data model.
+- **Task:** Define `WeddingTask` with the requested types, optional fields, and defaults, then record this prompt as entry #2.
+- **Format:** Use idiomatic Prisma schema syntax and the established numbered Markdown prompt-history structure.
+- **Constraints:** Modify only `prisma/schema.prisma` and `prompt-history.md`; preserve the generator, datasource, and prior history; do not migrate, generate clients, install packages, or access the database.
