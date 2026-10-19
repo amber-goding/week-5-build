@@ -526,9 +526,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-top: 1rem;
 }
 
+.task-action-buttons,
+.delete-confirmation-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
 .edit-button,
 .save-edit-button,
-.cancel-edit-button {
+.cancel-edit-button,
+.delete-button,
+.confirm-delete-button {
   align-items: center;
   border-radius: 2px;
   display: inline-flex;
@@ -552,26 +562,31 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 0.5rem;
 }
 
-.cancel-edit-button {
+.cancel-edit-button,
+.delete-button {
   background: transparent;
   border: 1px solid var(--taupe);
   color: var(--plum);
 }
 
 .edit-button:hover:not(:disabled),
-.cancel-edit-button:hover:not(:disabled) {
+.cancel-edit-button:hover:not(:disabled),
+.delete-button:hover:not(:disabled) {
   background: var(--ivory-deep);
   border-color: var(--mauve);
 }
 
-.edit-button-icon {
+.edit-button-icon,
+.delete-button-icon {
   height: 0.85rem;
   width: 0.85rem;
 }
 
 .edit-button:focus-visible,
 .save-edit-button:focus-visible,
-.cancel-edit-button:focus-visible {
+.cancel-edit-button:focus-visible,
+.delete-button:focus-visible,
+.confirm-delete-button:focus-visible {
   outline: 3px solid var(--plum);
   outline-offset: 3px;
 }
@@ -621,13 +636,58 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .save-edit-button:disabled,
-.cancel-edit-button:disabled {
+.cancel-edit-button:disabled,
+.edit-button:disabled,
+.delete-button:disabled,
+.confirm-delete-button:disabled {
   cursor: not-allowed;
   opacity: 0.62;
 }
 
 .cancel-edit-button {
   min-width: 6rem;
+}
+
+.delete-confirmation {
+  background: var(--ivory-deep);
+  border: 1px solid var(--taupe);
+  border-left: 3px solid var(--mauve);
+  margin-top: 0.65rem;
+  max-width: 30rem;
+  padding: 0.8rem 0.9rem;
+}
+
+.delete-confirmation > p:first-child {
+  color: var(--charcoal);
+  font-size: 0.88rem;
+  margin-bottom: 0.7rem;
+  overflow-wrap: anywhere;
+}
+
+.delete-confirmation > p:first-child strong {
+  color: var(--plum-deep);
+  font-weight: 700;
+}
+
+.delete-confirmation-actions {
+  justify-content: flex-start;
+}
+
+.confirm-delete-button {
+  background: var(--plum);
+  border: 1px solid var(--plum);
+  color: var(--ivory);
+}
+
+.confirm-delete-button:hover:not(:disabled) {
+  background: var(--plum-deep);
+  border-color: var(--plum-deep);
+}
+
+.delete-error {
+  color: #702f33;
+  font-size: 0.82rem;
+  margin-top: 0.65rem;
 }
 
 .task-edit-message {

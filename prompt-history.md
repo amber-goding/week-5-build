@@ -750,3 +750,70 @@
 - **Task:** Refine the Edit toggle, compact the editor fields, and make the plum save and secondary cancel actions visually distinct.
 - **Format:** Add a small decorative pencil SVG and focused responsive CSS using the existing palette and accessible focus styling.
 - **Constraints:** Modify only the Edit component, related CSS, and prompt history; preserve update behavior, prefilled values, validation feedback, cancel behavior, Create/Read, Prisma, Server Actions, and database configuration; add no dependencies or Delete functionality; do not migrate, commit, or push.
+
+## 28. Add the server-side WeddingTask delete operation
+
+### Exact prompt
+
+> Implement only the server-side Delete operation for Ever After Planner.
+>
+> In `app/actions.ts`, add a Next.js Server Action named `deleteWeddingTask` that:
+>
+> 1. Accepts FormData containing the ID of an existing WeddingTask.
+> 2. Validates that the ID is a positive integer.
+> 3. Uses the existing Prisma Client to delete only the task matching that ID.
+> 4. Returns a safe success result when deletion succeeds.
+> 5. Returns "Wedding task not found." when the ID does not exist.
+> 6. Handles database errors without exposing internal details or credentials.
+> 7. Preserves the existing Create and Update functionality.
+>
+> Keep the implementation simple and consistent with the existing Server Actions.
+>
+> Do not modify the UI, add confirmation dialogs yet, install dependencies, change the database schema, or run migrations.
+>
+> Follow `AGENTS.md` and append this exact prompt to `prompt-history.md`.
+>
+> Run TypeScript and focused ESLint checks, show the diff, and explain how deletion reaches Neon.
+>
+> Do not invoke the Delete action, delete any records, commit, or push.
+
+### Inferred details
+
+- **Context:** The project supports creating and updating wedding tasks, and the user now needs the server-side deletion operation before adding its UI later.
+- **Task:** Add an ID-validated Server Action that deletes only the matching task and safely handles missing records and database failures.
+- **Format:** Use the existing Prisma singleton and a scoped Prisma delete query; return simple result objects and retain the current action conventions.
+- **Constraints:** Modify only `app/actions.ts` and `prompt-history.md`; preserve Create and Update; do not alter the UI, add confirmation dialogs or dependencies, change schema, run migrations, invoke deletion, change records, commit, or push; never expose credentials or internal errors.
+
+## 29. Add the task Delete confirmation interface
+
+### Exact prompt
+
+> Add the Delete interface to Ever After Planner using the existing `deleteWeddingTask` Server Action.
+>
+> Requirements:
+>
+> 1. Add a clearly labeled Delete button beside the Edit button for each saved task.
+> 2. Use a small trash icon if practical, without adding dependencies.
+> 3. When Delete is clicked, show an inline confirmation with the task title and two options: "Cancel" and "Yes, Delete".
+> 4. Do not delete anything until the user explicitly confirms.
+> 5. On confirmation, call `deleteWeddingTask` with the correct task ID.
+> 6. On success, close the confirmation and call `router.refresh()` so the task disappears from the list.
+> 7. On failure, display a safe error message and preserve the task.
+> 8. Disable confirmation controls while deletion is processing to prevent duplicate requests.
+> 9. Style the controls consistently with the existing charcoal, mauve, plum, and ivory interface.
+> 10. Maintain keyboard accessibility, visible focus states, and responsive behavior.
+>
+> Preserve the existing Create, Read, and Update functionality.
+>
+> Do not modify the database schema, Server Action logic, Prisma configuration, or unrelated presentation elements. Do not add dependencies, authentication, or new pages.
+>
+> Follow `AGENTS.md`, append this prompt to `prompt-history.md`, run TypeScript and ESLint checks, and show the diff.
+>
+> Do not execute a deletion during verification. Do not commit or push.
+
+### Inferred details
+
+- **Context:** The server-side `deleteWeddingTask` action is ready, but tasks have no UI to request a deletion safely.
+- **Task:** Add an adjacent Delete control, require explicit inline confirmation, then invoke the existing action and refresh the task list only after success.
+- **Format:** Extend the existing task editor client component with confirmation state, accessible button and status markup, inline SVG, and palette-matched responsive styles.
+- **Constraints:** Preserve Create, Read, and Update behavior; do not change schema, Server Action logic, Prisma configuration, unrelated presentation, dependencies, authentication, or pages; do not delete during verification, commit, or push.

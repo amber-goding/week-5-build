@@ -17,6 +17,15 @@ function getTextField(formData: FormData, name: string) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function getWeddingTaskId(formData: FormData) {
+  const value = getTextField(formData, "id");
+  const id = Number(value);
+
+  return /^\d+$/.test(value) && Number.isSafeInteger(id) && id > 0
+    ? id
+    : null;
+}
+
 function parseDueDate(value: string) {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
 
@@ -120,10 +129,9 @@ export async function createWeddingTask(formData: FormData) {
 }
 
 export async function updateWeddingTask(formData: FormData) {
-  const idValue = getTextField(formData, "id");
-  const id = Number(idValue);
+  const id = getWeddingTaskId(formData);
 
-  if (!/^\d+$/.test(idValue) || !Number.isSafeInteger(id) || id < 1) {
+  if (id === null) {
     return {
       success: false,
       error: "A valid wedding task ID is required.",
@@ -154,6 +162,37 @@ export async function updateWeddingTask(formData: FormData) {
     return {
       success: false,
       error: "Unable to update the wedding task. Please try again.",
+    } as const;
+  }
+}
+
+export async function deleteWeddingTask(formData: FormData) {
+  const id = getWeddingTaskId(formData);
+
+  if (id === null) {
+    return {
+      success: false,
+      error: "A valid wedding task ID is required.",
+    } as const;
+  }
+
+  try {
+    const result = await prisma.weddingTask.deleteMany({
+      where: { id },
+    });
+
+    if (result.count === 0) {
+      return {
+        success: false,
+        error: "Wedding task not found.",
+      } as const;
+    }
+
+    return { success: true } as const;
+  } catch {
+    return {
+      success: false,
+      error: "Unable to delete the wedding task. Please try again.",
     } as const;
   }
 }
