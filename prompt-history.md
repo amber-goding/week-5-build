@@ -317,3 +317,436 @@
 - **Task:** Move `connection()` and the Prisma read into a nested async Server Component and stream it through a Suspense fallback.
 - **Format:** Make a focused page refactor, retain the existing UI, show the diff, and explain the runtime data flow and verification results.
 - **Constraints:** Preserve Create/Read behavior, `router.refresh()`, task cards, styling, and fresh request-time data; do not disable Cache Components, add caching or dependencies, change Prisma/database configuration, commit, or push.
+
+## 15. Establish the Ever After Planner visual foundation
+
+### Exact prompt
+
+> Establish the visual foundation for Ever After Planner using an elegant, luxurious, and welcoming wedding-planning aesthetic.
+>
+> Color palette:
+>
+> - Deep charcoal #29282D — primary background
+> - Dusty mauve #AD8F9D — signature accent
+> - Warm ivory #F7F3EF — content surfaces
+> - Muted plum #66515F — primary buttons and headings
+> - Champagne #C8B39A — subtle highlights
+> - Soft taupe #C4B8B1 — borders and details
+>
+> Create a sophisticated, romantic, gender-inclusive design that feels welcoming to brides, couples, and bridal parties without looking overly pink, childish, or cluttered.
+>
+> Focus only on global colors, typography, and visual styling. Maintain readable contrast, clearly visible date-picker controls, responsive behavior, and accessible focus states.
+>
+> Preserve all existing Create/Read functionality, database connections, components, and page structure.
+>
+> Modify only `app/globals.css`, `app/layout.tsx` if necessary, and `prompt-history.md`. Use existing dependencies.
+>
+> Follow `AGENTS.md`, append the prompt to `prompt-history.md`, run appropriate checks, and explain the diff. Do not commit or push.
+
+### Inferred details
+
+- **Context:** Give the working Wedding Planning Tracker a cohesive Ever After Planner identity without restructuring the application.
+- **Task:** Apply the supplied palette, refined typography, surface treatments, and accessible interaction styling at the global level.
+- **Format:** Use global CSS tokens and focused overrides so the existing Tailwind-styled form and task list adopt the new visual system.
+- **Constraints:** Modify only `app/globals.css`, `app/layout.tsx` if needed, and `prompt-history.md`; retain responsive Create/Read behavior, visible date controls, accessible focus, existing dependencies, database configuration, components, and page structure; do not commit or push.
+
+## 16. Redesign the Ever After Planner interface
+
+### Exact prompt
+
+> Redesign the Ever After Planner interface. The current design looks like a generic form stacked above task cards. Use the existing page as the starting point, but create a distinctive luxury wedding-planning dashboard inspired by high-end bridal editorials.
+>
+> Design direction:
+>
+> - Deep charcoal, dusty mauve, muted plum, warm ivory, and restrained champagne accents.
+> - Strong typography contrast: oversized elegant serif headings, selective italic accents, and refined sans-serif body text.
+> - A memorable branded hero with an editorial headline and welcoming supporting copy.
+> - A wider, balanced desktop layout that visually connects the Add Task form and saved tasks, rather than stacking everything in a narrow central column.
+> - Beautifully organized form fields, refined buttons, and task cards with stronger visual hierarchy.
+> - Intentional whitespace, subtle decorative details, sophisticated borders, and polished spacing.
+> - Responsive layouts that stack gracefully on mobile.
+> - Excellent readability, accessible focus states, and a clearly visible date picker.
+>
+> Avoid generic SaaS dashboard styling, repetitive cards, excessive rounding, unnecessary animations, and decorative elements that distract from usability.
+>
+> You may restructure presentation components and update styling, but preserve all existing Create/Read functionality, server-side Prisma queries, Server Actions, Suspense, and router refresh behavior.
+>
+> Do not add dependencies, modify the database, introduce new features, or alter business logic.
+>
+> Follow AGENTS.md, append this prompt to prompt-history.md, run TypeScript, ESLint, and build checks, and explain the diff. Do not commit or pu
+
+### Inferred details
+
+- **Context:** Evolve the functional tracker into a distinctive Ever After Planner experience with a high-end bridal editorial sensibility.
+- **Task:** Introduce a branded hero, a unified wide planning workspace, a refined task composer, and an editorial saved-task ledger.
+- **Format:** Use responsive presentation components, purposeful typography, restrained decoration, strong hierarchy, and the established wedding palette.
+- **Constraints:** Preserve the Prisma Server Component query, Server Action, Suspense boundary, `router.refresh()`, Create/Read behavior, and business logic; do not add dependencies, modify the database, introduce features, commit, or push.
+
+## 17. Refine the Ever After Planner presentation
+
+### Exact prompt
+
+> Refine the Ever After Planner visual design with a small, presentation-only pass.
+>
+> Goals:
+>
+> 1. Improve the typography so the headers feel more elegant, balanced, and intentional.
+> 2. Refine the hero headline so it looks less awkward or overly heavy while preserving the editorial feel.
+> 3. Improve section headings and supporting text so they feel polished and luxurious rather than stiff.
+> 4. Add subtle decorative accents such as delicate filigree, ornamental linework, or faint floral-inspired details to enhance elegance.
+> 5. Keep these decorative details restrained, sophisticated, and lightweight — not busy, not childish, and not clip-art-like.
+> 6. Maintain excellent readability, visible form controls, responsive behavior, and accessibility.
+>
+> Design guidance:
+>
+> - Preserve the current overall layout, color palette, and Create/Read functionality.
+> - Use subtle visual decoration only in presentation areas such as the hero section, panel corners, dividers, or section headers.
+> - If decorative graphics are added, prefer CSS shapes, pseudo-elements, inline SVG, or lightweight built-in approaches. Do not add dependencies.
+> - Improve heading scale, font pairing, spacing, line-height, and hierarchy where needed.
+>
+> Do not modify database logic, Prisma, Server Actions, Suspense behavior, routing, or business logic.\
+> Do not add new features.
+>
+> Modify only presentation-related files and `prompt-history.md`.
+>
+> Follow `AGENTS.md`, append this prompt to `prompt-history.md`, run TypeScript, ESLint, and build checks, and explain the diff.
+>
+> Do not commit or push.
+
+### Inferred details
+
+- **Context:** Polish the established editorial dashboard without changing its layout or functional architecture.
+- **Task:** Lighten and rebalance the typography, refine presentation copy, and add restrained botanical and geometric ornamentation.
+- **Format:** Use a system editorial type stack, a decorative `aria-hidden` SVG, and lightweight CSS pseudo-elements in presentation areas.
+- **Constraints:** Modify presentation files and prompt history only; preserve the palette, layout, responsive behavior, accessible controls, Create/Read flow, Prisma, Server Actions, Suspense, routing, and business logic; add no dependencies or features; do not commit or push.
+
+## 18. Fix the Ever After Planner layout and typography
+
+### Exact prompt
+
+> Fix the layout and typography problems in Ever After Planner shown in my latest browser screenshot.
+>
+> The current design has a massive empty gap above the header, an oversized hero headline, awkward italic line breaks, and inconsistent heading proportions.
+>
+> Requirements:
+>
+> 1. Identify and remove the CSS or layout rule causing the excessive top spacing. Do not use arbitrary negative margins or positioning hacks.
+> 2. Position the header near the top of the viewport with normal page padding.
+> 3. Reduce the hero headline size and line height to create balanced, intentional typography. Use responsive `clamp()` values if appropriate.
+> 4. Limit decorative italic typography to a controlled accent rather than dominating entire headings.
+> 5. Establish a consistent heading hierarchy for the hero, form, and task list.
+> 6. Preserve the current charcoal, mauve, plum, champagne, and ivory palette.
+> 7. Keep the existing two-column desktop layout and responsive mobile stacking.
+> 8. Do not add floral decorations yet.
+>
+> Preserve all Create/Read functionality, Prisma queries, Server Actions, Suspense, and database behavior.
+>
+> Modify only necessary presentation files and `prompt-history.md`. Do not add dependencies or unrelated features.
+>
+> Follow `AGENTS.md`, record the exact prompt, run TypeScript, ESLint, and build checks, and report the root cause of the excessive spacing and the precise changes made.
+>
+> Do not commit or push.
+
+### Inferred details
+
+- **Context:** Correct spacing and typographic imbalance visible in the latest browser rendering of the editorial dashboard.
+- **Task:** Remove cumulative hero spacing, reduce and normalize the heading scale, constrain italic accents, and remove the current floral decoration.
+- **Format:** Make targeted presentation changes with responsive `clamp()` typography and a consistent hero-to-section-to-task hierarchy.
+- **Constraints:** Preserve the palette, two-column desktop layout, mobile stacking, accessible controls, Create/Read functionality, Prisma, Server Actions, Suspense, routing, and database behavior; modify only presentation files and prompt history; add no dependencies, features, positioning hacks, commits, or pushes.
+
+## 19. Refine the hero into a cohesive vertical layout
+
+### Exact prompt
+
+> Refine only the hero section layout in Ever After Planner.
+>
+> Currently, the large headline appears on the left while the introductory paragraph and italic tagline appear in a separate column on the right.
+>
+> Change the hero to a cohesive, left-aligned vertical layout:
+>
+> 1. Display the headline first.
+> 2. Place the introductory paragraph directly underneath it.
+> 3. Place "Made for every way you celebrate." beneath the paragraph.
+> 4. Maintain elegant, intentional spacing and a balanced maximum text width.
+> 5. Preserve the current fonts, colors, wording, decorative details, and responsive behavior.
+> 6. Remove any unnecessary two-column hero layout rules without introducing excessive empty space.
+>
+> Do not modify the form, saved task list, application functionality, or database logic.
+>
+> Follow `AGENTS.md`, append this prompt to `prompt-history.md`, run appropriate checks, and explain the diff. Do not commit or push.
+
+### Inferred details
+
+- **Context:** The hero's headline and supporting copy are visually disconnected by a desktop-only two-column rule.
+- **Task:** Stack the existing headline, introductory paragraph, and tagline in one cohesive left-aligned flow with balanced spacing and readable widths.
+- **Format:** Make a focused CSS-only hero layout adjustment and record the prompt in the established history format.
+- **Constraints:** Preserve all wording, fonts, colors, decorative details, responsive behavior, form and task-list presentation, Create/Read functionality, and database logic; add no dependencies; do not commit or push.
+
+## 20. Center the hero and correct headline wrapping
+
+### Exact prompt
+
+> Fix the Ever After Planner hero layout and headline wrapping.
+>
+> On desktop, I want the headline centered horizontally and displayed on exactly two lines:
+>
+> Line 1: "Your celebration,"\
+> Line 2: "beautifully considered."
+>
+> Requirements:
+>
+> - Center the hero content within the page's main container.
+> - Give the headline enough horizontal width to prevent unwanted line breaks.
+> - Preserve the elegant serif typography, with the second line in italic mauve.
+> - Use balanced, responsive font sizing rather than oversized text.
+> - Center the introductory paragraph directly beneath the headline, followed by "Made for every way you celebrate."
+> - Keep appropriate spacing between the header, hero, and planning dashboard.
+> - On narrow mobile screens, allow natural wrapping when necessary rather than causing horizontal overflow.
+>
+> Remove any restrictive width or grid rules causing the headline to wrap awkwardly. Do not use absolute positioning or negative margins as workarounds.
+>
+> Preserve the existing design palette, form, task list, Create/Read functionality, and database logic.
+>
+> Follow `AGENTS.md`, append this prompt to `prompt-history.md`, run appropriate checks, and show the diff. Do not commit or push.
+
+### Inferred details
+
+- **Context:** The explicit two-line hero headline is wrapping further because its width is constrained, and the vertically stacked hero is still left-aligned.
+- **Task:** Center the hero flow, remove the restrictive headline measure, preserve exactly two headline lines on wider screens, and allow safe natural wrapping on narrow screens.
+- **Format:** Make focused presentation-only CSS changes and record the prompt in the established history format.
+- **Constraints:** Preserve the palette, typography family, wording, decorative details, spacing rhythm, responsive behavior, form, task list, Create/Read functionality, and database logic; use no positioning hacks, new dependencies, commits, or pushes.
+
+## 21. Add subtle filigree and ornamental bridal accents
+
+### Exact prompt
+
+> Add subtle filigree and ornamental bridal accents to the current Ever After Planner design.
+>
+> Goals:
+> 1. Introduce elegant decorative details such as delicate filigree, fine ornamental linework, or faint botanical-inspired accents.
+> 2. Keep the effect subtle, sophisticated, and lightweight.
+> 3. Use decoration only to enhance the design — not dominate it.
+> 4. Prefer accents in places like:
+>    - hero corners or edges
+>    - section dividers
+>    - panel corners
+>    - heading embellishments
+> 5. Use the existing charcoal, mauve, plum, champagne, and ivory palette.
+> 6. Preserve readability, accessible contrast, visible form controls, and responsive behavior.
+>
+> Important constraints:
+> - Do not change the current page layout structure.
+> - Do not reposition the hero, form, or task list.
+> - Do not change any wording.
+> - Do not modify Create/Read functionality, Server Actions, Prisma, Suspense behavior, routing, or database logic.
+> - Do not add dependencies.
+>
+> Use CSS, pseudo-elements, inline SVG, or similarly lightweight built-in approaches if needed.
+>
+> Modify only presentation-related files and `prompt-history.md`.
+>
+> Follow `AGENTS.md`, append this prompt to `prompt-history.md`, run TypeScript, ESLint, and build checks, and explain the diff.
+>
+> Do not commit or push.
+
+### Inferred details
+
+- **Context:** The established editorial layout needs a restrained layer of bridal ornamentation without changing its structure or visual hierarchy.
+- **Task:** Extend the existing linework with subtle hero-edge flourishes, divider embellishments, and refined panel-corner details.
+- **Format:** Use lightweight CSS pseudo-elements and existing palette tokens, plus the established chronological prompt-history format.
+- **Constraints:** Modify presentation styling and prompt history only; preserve layout, wording, accessibility, responsive behavior, controls, Create/Read functionality, Server Actions, Prisma, Suspense, routing, and database logic; add no dependencies; do not commit or push.
+
+## 22. Replace geometric accents with botanical filigree
+
+### Exact prompt
+
+> The previous filigree attempt is almost invisible and consists mainly of geometric lines and diamonds. I want clearly recognizable, elegant BOTANICAL filigree.
+>
+> Add two decorative floral ornaments to Ever After Planner:
+>
+> 1. A prominent but tasteful floral flourish in the upper-right area of the charcoal hero, featuring delicate rose-like flowers, curling stems, and leaves.
+> 2. A smaller coordinating botanical flourish in a corner of the ivory dashboard, away from form fields and task content.
+>
+> Requirements:
+>
+> - Use inline SVG with actual botanical paths or shapes, not just CSS borders, diamonds, or circles.
+> - Use muted champagne and dusty mauve linework with enough contrast to be visibly recognizable.
+> - Keep the illustrations refined, airy, and inspired by luxury wedding stationery—not clip art.
+> - Use responsive sizing and prevent overlap with text, buttons, or form inputs.
+> - Mark purely decorative SVGs as hidden from assistive technology.
+> - Preserve the existing hero alignment, fonts, page structure, colors, and all functionality.
+> - Do not add external images or dependencies.
+>
+> Modify only necessary presentation files and `prompt-history.md`. Follow `AGENTS.md`, record this prompt, run TypeScript, ESLint, and build checks, and show the diff.
+>
+> Do not commit or push.
+
+### Inferred details
+
+- **Context:** The previous CSS-only ornaments read as faint geometry rather than recognizable botanical filigree.
+- **Task:** Replace the hero-edge geometry with a visible rose-and-vine SVG and add a smaller coordinating floral SVG within safe dashboard corner space.
+- **Format:** Use hand-drawn inline SVG paths styled with existing champagne and mauve tokens, plus responsive presentation CSS and the established prompt-history format.
+- **Constraints:** Modify only presentation files and prompt history; preserve the hero alignment, fonts, wording, layout structure, palette, accessibility, responsive behavior, controls, and all Create/Read, Server Action, Prisma, Suspense, routing, and database behavior; add no external assets or dependencies; do not commit or push.
+
+## 23. Emphasize visible botanical corner flourishes
+
+### Exact prompt
+
+> Fix the decorative styling in Ever After Planner.
+>
+> The current decoration is not what I asked for. I do NOT want ornamental divider lines or tiny geometric accents. I want visible botanical CORNER flourishes.
+>
+> Requirements:
+> 1. Remove or stop emphasizing the current divider-style ornamental decorations if they are the main decorative treatment.
+> 2. Add clearly visible botanical corner flourishes instead.
+> 3. Place one flourish in the upper-right corner area of the dark hero section.
+> 4. Place one smaller coordinating flourish in a corner of the ivory dashboard panel.
+> 5. These flourishes must look botanical: visible leaves, stems, soft curved linework, and bridal-stationery elegance.
+> 6. Do NOT use clip-art styling, bulky flowers, or busy vines.
+> 7. Do NOT place the decoration as horizontal dividers between content sections.
+> 8. Use inline SVG or embedded SVG markup so the corner flourishes are actually visible and controllable.
+> 9. Use muted champagne and dusty mauve linework with enough contrast to be noticeable at normal viewing size.
+> 10. Keep the flourishes behind or beside the content so they never overlap text fields, task text, or buttons.
+> 11. Preserve the current layout, wording, Create/Read functionality, Suspense behavior, Prisma logic, and responsive behavior.
+>
+> Important:
+> - I want corner flourishes, not divider ornaments.
+> - The decorative elements need to be visibly recognizable in the browser screenshot.
+> - If necessary, slightly increase their size and contrast so they are clearly present.
+>
+> Modify only presentation-related files and `prompt-history.md`.
+> Follow `AGENTS.md`, append this prompt to `prompt-history.md`, run TypeScript, ESLint, and build checks, and explain exactly where the corner flourishes were added.
+>
+> Do not commit or push.
+
+### Inferred details
+
+- **Context:** The current botanical SVGs are too small or breakpoint-limited to read clearly, while geometric divider and corner treatments remain visually prominent.
+- **Task:** Remove the geometric ornament language, enlarge and strengthen the botanical SVGs, and reshape the dashboard sprig into a true corner-hugging composition.
+- **Format:** Use two responsive, assistive-technology-hidden inline SVG corner flourishes with visible champagne stems and mauve leaves and blooms.
+- **Constraints:** Modify only presentation files and prompt history; keep ornaments out of content zones; preserve layout, wording, responsive behavior, accessibility, Create/Read functionality, Suspense, Prisma, routing, and database logic; add no dependencies; do not commit or push.
+
+## 24. Clean up the Ever After Planner interface
+
+### Exact prompt
+
+> Clean up the Ever After Planner interface. The recent decorative redesign introduced enormous black SVG shapes, excessive empty space, and a broken dashboard layout.
+>
+> Our priority is now a beautiful, functional, professional wedding planning application—not decorative artwork.
+>
+> Requirements:
+>
+> 1. Remove all custom filigree, ornamental SVGs, and associated decorative positioning/CSS.
+> 2. Remove the excessive empty space above the page header and throughout the layout.
+> 3. Restore a clean, balanced two-column dashboard on desktop: Add Task form on the left, saved tasks on the right.
+> 4. Stack these sections vertically on mobile.
+> 5. Keep the hero centered, with "Your celebration," on the first line and "beautifully considered." on the second line at desktop widths.
+> 6. Use elegant, readable serif headings paired with modern sans-serif body text.
+> 7. Retain the charcoal, dusty mauve, muted plum, champagne, and ivory color palette.
+> 8. Use subtle borders, soft shadows, balanced spacing, and refined typography for a polished appearance.
+> 9. Ensure all form controls are clearly visible, including the date picker.
+> 10. Keep the layout compact enough that users can see the beginning of the dashboard without excessive scrolling.
+>
+> Preserve all existing Create/Read functionality, Prisma queries, Server Actions, Suspense behavior, routing, and database configuration.
+>
+> Do not introduce new features, dependencies, images, SVG decorations, or animations.
+>
+> Modify only necessary presentation files and `prompt-history.md`. Follow `AGENTS.md`, log this prompt, run TypeScript, ESLint, and production build checks, and summarize the changes.
+>
+> Do not commit or push.
+
+### Inferred details
+
+- **Context:** Recent decorative SVG work disrupted the visual balance and made the dashboard feel broken and excessively spacious.
+- **Task:** Remove custom artwork and its positioning rules, restore the existing responsive dashboard grid, and tighten the hero, panels, form, and page spacing.
+- **Format:** Use the established serif-and-sans typography, restrained palette, borders, and softer shadows without introducing new decorative assets.
+- **Constraints:** Modify presentation files and prompt history only; preserve the centered desktop headline, responsive two-column-to-stacked layout, visible controls, Create/Read functionality, Prisma queries, Server Actions, Suspense, routing, and database configuration; add no features, dependencies, images, SVGs, animations, commits, or pushes.
+
+## 25. Add the server-side WeddingTask update operation
+
+### Exact prompt
+
+> Implement only the server-side Update operation for Ever After Planner.
+>
+> In `app/actions.ts`, add a Next.js Server Action named `updateWeddingTask` that:
+>
+> 1. Accepts FormData containing an existing WeddingTask ID, title, category, status, optional due date, and optional notes.
+> 2. Validates the ID and input values using the same rules as `createWeddingTask`.
+> 3. Uses the existing Prisma Client to update only the task matching that ID.
+> 4. Returns a safe success or error result, including when the task does not exist.
+> 5. Does not expose database errors or credentials to the browser.
+> 6. Preserves the existing Create operation.
+>
+> Keep the implementation simple. Reuse existing validation helpers where appropriate, without unnecessary refactoring.
+>
+> Do not modify the UI, add Delete functionality, install dependencies, change the database schema, or run migrations.
+>
+> Follow `AGENTS.md` and append this prompt to `prompt-history.md`. Run TypeScript and focused ESLint checks, show the diff, and explain how the update reaches Neon.
+>
+> Do not commit or push.
+
+### Inferred details
+
+- **Context:** The existing server action supports creating wedding tasks, while server-side update functionality is not yet implemented.
+- **Task:** Add an ID-scoped update action that applies the Create action's field validation and safely distinguishes a missing task from other failures.
+- **Format:** Reuse a focused validation helper and the existing Prisma singleton, returning only simple success or user-safe error objects.
+- **Constraints:** Modify only `app/actions.ts` and `prompt-history.md`; preserve Create behavior; do not change UI, add Delete, install dependencies, alter the schema, run migrations, expose secrets or database errors, commit, or push.
+
+## 26. Add inline editing to saved wedding tasks
+
+### Exact prompt
+
+> Add a simple inline Edit feature to the existing Ever After Planner task list.
+>
+> Requirements:
+>
+> 1. Add an accessible "Edit" button to each saved wedding task.
+> 2. Clicking Edit reveals a compact form prefilled with that task's title, category, status, due date, and notes.
+> 3. Include Save Changes and Cancel buttons.
+> 4. Submit updates through the existing `updateWeddingTask` Server Action, including the task ID.
+> 5. Display success or validation errors without losing user input.
+> 6. After a successful update, close the editor and refresh the task list using `router.refresh()`.
+> 7. Cancel must close the editor without saving changes.
+> 8. Preserve the current charcoal, mauve, and ivory design and responsive layout.
+>
+> Keep Prisma queries and database credentials server-side. Do not implement Delete, authentication, new pages, or additional features. Do not modify the database schema, run migrations, or add dependencies.
+>
+> Follow `AGENTS.md`, append this prompt to `prompt-history.md`, run TypeScript and ESLint checks, and explain the diff. Do not commit or push.
+
+### Inferred details
+
+- **Context:** Saved tasks are rendered from a server-side Prisma query and the project now has a validated `updateWeddingTask` Server Action but no interface for invoking it.
+- **Task:** Add an inline, prefilled editor to each task with Save and Cancel controls, safe feedback, and a post-success router refresh.
+- **Format:** Keep data fetching in the Server Component and use a focused Client Component for editor state, FormData submission, and responsive styling.
+- **Constraints:** Preserve the current palette, responsive layout, Create/Read behavior, Prisma and credentials on the server, and existing application architecture; add no Delete, authentication, pages, dependencies, schema changes, migrations, commits, or pushes.
+
+## 27. Refine the inline Edit controls
+
+### Exact prompt
+
+> Refine only the existing inline Edit functionality in Ever After Planner.
+>
+> The Edit form currently looks oversized and unfinished. Save Changes and Cancel appear as crowded plain text, and the Edit controls are difficult to identify.
+>
+> Requirements:
+>
+> 1. Style each Edit control as a clearly recognizable, accessible button with a subtle pencil icon if practical.
+> 2. Make the expanded editor visually distinct but compact, with consistent spacing and alignment.
+> 3. Style Save Changes as a muted plum primary button and Cancel as a clearly separated secondary button.
+> 4. Use the application's existing charcoal, mauve, plum, and ivory palette.
+> 5. Maintain readable labels, visible focus states, and responsive behavior.
+> 6. Preserve all existing Update functionality, prefilled values, validation messages, and cancel behavior.
+> 7. Do not redesign the main page or modify the Add Task form.
+>
+> Keep all Create/Read functionality, Prisma queries, Server Actions, and database configuration unchanged.
+>
+> Modify only the necessary Edit component, associated CSS, and `prompt-history.md`. Do not add dependencies, implement Delete, run migrations, commit, or push.
+>
+> Follow `AGENTS.md`, append this prompt to `prompt-history.md`, run TypeScript and ESLint checks, and show the diff.
+
+### Inferred details
+
+- **Context:** The inline editor works, but its appearance makes controls hard to recognize and the expanded form feels too large.
+- **Task:** Refine the Edit toggle, compact the editor fields, and make the plum save and secondary cancel actions visually distinct.
+- **Format:** Add a small decorative pencil SVG and focused responsive CSS using the existing palette and accessible focus styling.
+- **Constraints:** Modify only the Edit component, related CSS, and prompt history; preserve update behavior, prefilled values, validation feedback, cancel behavior, Create/Read, Prisma, Server Actions, and database configuration; add no dependencies or Delete functionality; do not migrate, commit, or push.

@@ -2,15 +2,13 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 
 import { AddWeddingTaskForm } from "@/app/add-wedding-task-form";
+import { EditWeddingTaskForm } from "@/app/edit-wedding-task-form";
 import { prisma } from "@/lib/prisma";
 
 const statusStyles: Record<string, string> = {
-  "Not Started":
-    "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200",
-  "In Progress":
-    "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-200",
-  Completed:
-    "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200",
+  "Not Started": "status-badge status-not-started",
+  "In Progress": "status-badge status-in-progress",
+  Completed: "status-badge status-completed",
 };
 
 const dueDateFormatter = new Intl.DateTimeFormat("en-US", {
@@ -34,84 +32,89 @@ async function WeddingTaskList() {
   });
 
   return (
-    <section aria-labelledby="task-list-heading">
-      <div className="mb-5 flex items-end justify-between gap-4">
+    <section className="task-ledger" aria-labelledby="task-list-heading">
+      <div className="ledger-heading">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-widest text-rose-600 dark:text-rose-400">
-            Saved plans
-          </p>
-          <h2
-            id="task-list-heading"
-            className="mt-1 text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50"
-          >
-            Wedding tasks
+          <p className="eyebrow">Your planning journal</p>
+          <h2 id="task-list-heading">
+            Plans taking <em>shape</em>
           </h2>
         </div>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          {tasks.length} {tasks.length === 1 ? "task" : "tasks"}
+        <p className="task-count" aria-label={`${tasks.length} saved tasks`}>
+          <span>{String(tasks.length).padStart(2, "0")}</span>
+          {tasks.length === 1 ? "entry" : "entries"}
         </p>
       </div>
 
       {tasks.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-rose-200 bg-white px-6 py-10 text-center shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-          <p className="font-medium text-zinc-900 dark:text-zinc-100">
-            No wedding tasks yet.
-          </p>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            Add your first task with the form above to start planning.
+        <div className="empty-state">
+          <p className="empty-state-kicker">Your plan begins here</p>
+          <p>
+            Add the first detail from the planning panel and it will appear in
+            this journal.
           </p>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2">
-          {tasks.map((task) => (
-            <article
-              key={task.id}
-              className="rounded-2xl border border-rose-100 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-rose-600 dark:text-rose-400">
-                    {task.category}
-                  </p>
-                  <h3 className="mt-1 text-lg font-semibold text-zinc-950 dark:text-zinc-50">
-                    {task.title}
-                  </h3>
-                </div>
-                <span
-                  className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-medium ${
-                    statusStyles[task.status] ?? statusStyles["Not Started"]
-                  }`}
-                >
-                  {task.status}
-                </span>
-              </div>
+        <ol className="task-list">
+          {tasks.map((task, index) => (
+            <li key={task.id}>
+              <article className="task-entry">
+                <p className="task-number" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
 
-              <dl className="mt-4 space-y-3 text-sm">
-                <div>
-                  <dt className="font-medium text-zinc-700 dark:text-zinc-300">
-                    Due date
-                  </dt>
-                  <dd className="mt-0.5 text-zinc-600 dark:text-zinc-400">
-                    {task.dueDate
-                      ? dueDateFormatter.format(task.dueDate)
-                      : "No due date"}
-                  </dd>
-                </div>
-
-                {task.notes && (
-                  <div>
-                    <dt className="font-medium text-zinc-700 dark:text-zinc-300">
-                      Notes
-                    </dt>
-                    <dd className="mt-0.5 whitespace-pre-wrap text-zinc-600 dark:text-zinc-400">
-                      {task.notes}
-                    </dd>
+                <div className="task-content">
+                  <div className="task-title-row">
+                    <div>
+                      <p className="task-category">{task.category}</p>
+                      <h3>{task.title}</h3>
+                    </div>
+                    <span
+                      className={
+                        statusStyles[task.status] ??
+                        statusStyles["Not Started"]
+                      }
+                    >
+                      {task.status}
+                    </span>
                   </div>
-                )}
-              </dl>
-            </article>
+
+                  <dl className="task-meta">
+                    <div>
+                      <dt>Due</dt>
+                      <dd>
+                        {task.dueDate ? (
+                          <time
+                            dateTime={task.dueDate.toISOString().slice(0, 10)}
+                          >
+                            {dueDateFormatter.format(task.dueDate)}
+                          </time>
+                        ) : (
+                          "Open timeline"
+                        )}
+                      </dd>
+                    </div>
+                  </dl>
+
+                  {task.notes && <p className="task-notes">{task.notes}</p>}
+
+                  <EditWeddingTaskForm
+                    task={{
+                      id: task.id,
+                      title: task.title,
+                      category: task.category,
+                      status: task.status,
+                      dueDate: task.dueDate
+                        ? task.dueDate.toISOString().slice(0, 10)
+                        : "",
+                      notes: task.notes ?? "",
+                    }}
+                  />
+                </div>
+              </article>
+            </li>
           ))}
-        </div>
+        </ol>
       )}
     </section>
   );
@@ -119,18 +122,20 @@ async function WeddingTaskList() {
 
 function WeddingTaskListFallback() {
   return (
-    <section aria-labelledby="task-list-loading-heading">
-      <p className="text-sm font-semibold uppercase tracking-widest text-rose-600 dark:text-rose-400">
-        Saved plans
-      </p>
-      <h2
-        id="task-list-loading-heading"
-        className="mt-1 text-2xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50"
-      >
-        Wedding tasks
-      </h2>
-      <div className="mt-5 rounded-2xl border border-rose-100 bg-white px-6 py-8 text-center text-sm text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
-        Loading wedding tasks...
+    <section
+      className="task-ledger"
+      aria-labelledby="task-list-loading-heading"
+    >
+      <div className="ledger-heading">
+        <div>
+          <p className="eyebrow">Your planning journal</p>
+          <h2 id="task-list-loading-heading">
+            Plans taking <em>shape</em>
+          </h2>
+        </div>
+      </div>
+      <div className="ledger-loading" role="status">
+        Gathering your plans...
       </div>
     </section>
   );
@@ -138,13 +143,49 @@ function WeddingTaskListFallback() {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-rose-50 px-4 py-10 dark:bg-zinc-950">
-      <div className="mx-auto w-full max-w-4xl space-y-10">
-        <AddWeddingTaskForm />
+    <main className="planner-page">
+      <div className="planner-container">
+        <header className="editorial-hero">
+          <div className="brand-row">
+            <div className="brand-lockup">
+              <span className="brand-seal" aria-hidden="true">
+                EA
+              </span>
+              <div>
+                <p className="brand-name">Ever After</p>
+                <p className="brand-subtitle">Wedding planner</p>
+              </div>
+            </div>
+            <p className="journal-label">A private planning journal</p>
+          </div>
 
-        <Suspense fallback={<WeddingTaskListFallback />}>
-          <WeddingTaskList />
-        </Suspense>
+          <div className="hero-grid">
+            <h1 className="display-heading">
+              <span>Your celebration,</span>
+              <span>
+                beautifully <em>considered.</em>
+              </span>
+            </h1>
+            <div className="hero-copy">
+              <p>
+                A calm, considered place to shape the day—from the first
+                meaningful decision to the final finishing touch.
+              </p>
+              {/* <p className="hero-note">Made for every way you celebrate.</p> */}
+            </div>
+          </div>
+        </header>
+
+        <section className="dashboard-frame" aria-label="Planning workspace">
+          <div className="composer-panel">
+            <AddWeddingTaskForm />
+          </div>
+          <div className="ledger-panel">
+            <Suspense fallback={<WeddingTaskListFallback />}>
+              <WeddingTaskList />
+            </Suspense>
+          </div>
+        </section>
       </div>
     </main>
   );

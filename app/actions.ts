@@ -41,7 +41,7 @@ function parseDueDate(value: string) {
   return date;
 }
 
-export async function createWeddingTask(formData: FormData) {
+function validateWeddingTaskInput(formData: FormData) {
   const title = getTextField(formData, "title");
   const category = getTextField(formData, "category") || "General";
   const status = getTextField(formData, "status") || "Not Started";
@@ -77,7 +77,7 @@ export async function createWeddingTask(formData: FormData) {
     } as const;
   }
 
-  const dueDate = dueDateValue ? parseDueDate(dueDateValue) : undefined;
+  const dueDate = dueDateValue ? parseDueDate(dueDateValue) : null;
 
   if (dueDateValue && !dueDate) {
     return {
@@ -86,15 +86,28 @@ export async function createWeddingTask(formData: FormData) {
     } as const;
   }
 
+  return {
+    success: true,
+    data: {
+      title,
+      category,
+      status,
+      dueDate,
+      notes: notes || null,
+    },
+  } as const;
+}
+
+export async function createWeddingTask(formData: FormData) {
+  const input = validateWeddingTaskInput(formData);
+
+  if (!input.success) {
+    return input;
+  }
+
   try {
     await prisma.weddingTask.create({
-      data: {
-        title,
-        category,
-        status,
-        dueDate,
-        notes: notes || null,
-      },
+      data: input.data,
     });
 
     return { success: true } as const;
@@ -102,6 +115,45 @@ export async function createWeddingTask(formData: FormData) {
     return {
       success: false,
       error: "Unable to create the wedding task. Please try again.",
+    } as const;
+  }
+}
+
+export async function updateWeddingTask(formData: FormData) {
+  const idValue = getTextField(formData, "id");
+  const id = Number(idValue);
+
+  if (!/^\d+$/.test(idValue) || !Number.isSafeInteger(id) || id < 1) {
+    return {
+      success: false,
+      error: "A valid wedding task ID is required.",
+    } as const;
+  }
+
+  const input = validateWeddingTaskInput(formData);
+
+  if (!input.success) {
+    return input;
+  }
+
+  try {
+    const result = await prisma.weddingTask.updateMany({
+      where: { id },
+      data: input.data,
+    });
+
+    if (result.count === 0) {
+      return {
+        success: false,
+        error: "Wedding task not found.",
+      } as const;
+    }
+
+    return { success: true } as const;
+  } catch {
+    return {
+      success: false,
+      error: "Unable to update the wedding task. Please try again.",
     } as const;
   }
 }
