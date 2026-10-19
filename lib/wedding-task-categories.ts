@@ -1,0 +1,17 @@
+export const WEDDING_TASK_CATEGORIES = [
+  "Attire & Accessories",
+  "Beauty & Wellness",
+  "Budget & Payments",
+  "Cake & Desserts",
+  "Ceremony & Reception",
+  "Decor & Flowers",
+  "Food & Beverages",
+  "Guests & Seating",
+  "Invitations & Stationery",
+  "Music & Entertainment",
+  "Photography & Videography",
+  "Transportation & Accommodations",
+  "Vendors & Services",
+  "Venue & Location",
+  "Other",
+] as const;

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition, type FormEvent } from "react";
 
 import { deleteWeddingTask, updateWeddingTask } from "@/app/actions";
+import { WEDDING_TASK_CATEGORIES } from "@/lib/wedding-task-categories";
 
 type WeddingTaskFields = {
   id: number;
@@ -213,14 +214,25 @@ export function EditWeddingTaskForm({ task }: { task: WeddingTaskFields }) {
 
             <div className="field-group">
               <label htmlFor={`${formId}-category`}>Category</label>
-              <input
+              <select
                 id={`${formId}-category`}
                 name="category"
-                type="text"
                 defaultValue={task.category}
-                maxLength={100}
                 className="field-control"
-              />
+              >
+                {!WEDDING_TASK_CATEGORIES.some(
+                  (category) => category === task.category,
+                ) && (
+                  <option value={task.category}>
+                    {task.category} (saved category)
+                  </option>
+                )}
+                {WEDDING_TASK_CATEGORIES.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="field-group">

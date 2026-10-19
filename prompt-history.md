@@ -784,6 +784,91 @@
 - **Format:** Use the existing Prisma singleton and a scoped Prisma delete query; return simple result objects and retain the current action conventions.
 - **Constraints:** Modify only `app/actions.ts` and `prompt-history.md`; preserve Create and Update; do not alter the UI, add confirmation dialogs or dependencies, change schema, run migrations, invoke deletion, change records, commit, or push; never expose credentials or internal errors.
 
+## 30. Review the Add Task form and root layout changes
+
+### Exact prompt
+
+> Review the remaining uncommitted changes in `app/add-wedding-task-form.tsx` and `app/layout.tsx`.
+>
+> Determine whether they are intentional presentation changes needed for the current Ever After Planner interface.
+>
+> Verify that:
+>
+> - The Add Task form still calls the existing Create Server Action.
+> - Form validation, success/error messages, and refresh behavior remain intact.
+> - CSS classes referenced by the form exist.
+> - Layout metadata and fonts are configured correctly.
+> - No unrelated functionality or sensitive information was introduced.
+>
+> Do not modify application files. Follow `AGENTS.md` and append this prompt to `prompt-history.md`.
+>
+> Provide a concise recommendation on whether both files should be committed, and explain any concerns.
+>
+> Do not commit, push, or run migrations.
+
+### Inferred details
+
+- **Context:** Two presentation-related files remain modified, and their relationship to the current planner design and working Create flow needs review.
+- **Task:** Compare the diffs against the Create Server Action, validation and refresh behavior, matching CSS rules, Next.js metadata/font conventions, and secret-handling scope.
+- **Format:** Provide an evidence-based concise review and commit recommendation, recording the prompt in the established chronological format.
+- **Constraints:** Do not modify application files, expose sensitive values, commit, push, or run migrations; append only this review prompt to project history.
+
+## 31. Refine task controls and organize active and completed tasks
+
+### Exact prompt
+
+> Refine the existing Ever After Planner task list for usability and presentation.
+>
+> Implement these changes together:
+>
+> **1. Improve Edit and Delete controls**
+>
+> - Position Edit and Delete neatly together on each task card.
+> - Make both controls clearly recognizable, consistently sized, and aligned.
+> - Keep Edit styled as a subtle secondary action.
+> - Style Delete as a restrained destructive action with appropriate contrast.
+> - Preserve the existing inline deletion confirmation, Cancel, and Yes, Delete behavior.
+> - Ensure the controls work on desktop and mobile without overlapping task information.
+>
+> **2. Sort active tasks by due date**
+>
+> - Display tasks with status "Not Started" or "In Progress" in an Active Tasks section.
+> - Sort active tasks by due date, earliest first.
+> - Place tasks without a due date after dated tasks.
+> - Use creation date and ID as consistent tie-breakers.
+> - Do not add a priority field, new database columns, or migrations.
+>
+> **3. Separate completed tasks**
+>
+> - Display tasks with status "Completed" below the active tasks, separated by a clearly labeled "Completed Tasks" heading and subtle horizontal divider.
+> - Visually distinguish completed tasks with understated styling while keeping their text readable.
+> - Retain Edit and Delete controls on completed tasks.
+> - When a task's status changes to Completed, it should move to the completed section after saving.
+> - When a completed task is changed back to Not Started or In Progress, it should return to the active section in the correct due-date order.
+> - Ensure the organization remains correct after refreshing the browser.
+>
+> **4. Preserve existing behavior**
+>
+> - Keep Create, Read, Update, and Delete fully functional.
+> - Preserve existing Server Actions, Prisma Client, Suspense, and router.refresh behavior.
+> - Handle empty active or completed sections gracefully.
+> - Keep database queries server-side.
+> - Preserve the existing charcoal, mauve, plum, and ivory wedding-themed design.
+> - Do not introduce authentication, new dependencies, additional pages, or unrelated features.
+>
+> Use the existing database fields and prefer straightforward sorting/grouping logic. Modify only files necessary for this task.
+>
+> Follow AGENTS.md and append this exact prompt to prompt-history.md. Run TypeScript, ESLint, and production build checks. Show the diff and explain how the sorting and completed-task grouping work.
+>
+> Do not run migrations, commit, or push.
+
+### Inferred details
+
+- **Context:** The task list is currently one creation-ordered collection, and the Edit/Delete actions need consistent placement and destructive styling.
+- **Task:** Sort incomplete tasks by due date with undated items last, render completed tasks in a separate section, and keep all existing task actions available in both groups.
+- **Format:** Group and sort the server-fetched task records using their existing dates and IDs, then apply concise section and control styling.
+- **Constraints:** Modify only the list presentation/query fields, related CSS, and prompt history; preserve CRUD actions, confirmation behavior, Prisma, Suspense, refresh behavior, responsive design, and server-side data access; add no schema fields, migrations, dependencies, authentication, pages, commits, or pushes.
+
 ## 29. Add the task Delete confirmation interface
 
 ### Exact prompt
@@ -817,3 +902,53 @@
 - **Task:** Add an adjacent Delete control, require explicit inline confirmation, then invoke the existing action and refresh the task list only after success.
 - **Format:** Extend the existing task editor client component with confirmation state, accessible button and status markup, inline SVG, and palette-matched responsive styles.
 - **Constraints:** Preserve Create, Read, and Update behavior; do not change schema, Server Action logic, Prisma configuration, unrelated presentation, dependencies, authentication, or pages; do not delete during verification, commit, or push.
+
+## 32. Replace category text fields with a predefined wedding-category dropdown
+
+### Exact prompt
+
+> Improve Ever After Planner by replacing the free-text Category field with a predefined wedding-category dropdown.
+>
+> Display these categories in alphabetical order:
+>
+> - Attire & Accessories
+> - Beauty & Wellness
+> - Budget & Payments
+> - Cake & Desserts
+> - Ceremony & Reception
+> - Decor & Flowers
+> - Food & Beverages
+> - Guests & Seating
+> - Invitations & Stationery
+> - Music & Entertainment
+> - Photography & Videography
+> - Transportation & Accommodations
+> - Vendors & Services
+> - Venue & Location
+> - Other
+>
+> Keep "Other" at the bottom of the dropdown as a fallback option.
+>
+> Requirements:
+>
+> 1. Replace the Category text input with an accessible, mobile-friendly dropdown in both the Create Task and Edit Task forms.
+> 2. Define the category options in one shared constant so both forms use the same alphabetical list.
+> 3. Use "Other" as the default category for new tasks.
+> 4. Update server-side validation to accept only predefined categories for new tasks and newly selected category values.
+> 5. Preserve existing tasks and their saved categories, including older values that are not in the new list. When editing such a task, display its existing category as a temporary selectable option so users can retain it or choose a new category.
+> 6. Keep the existing Prisma schema and PostgreSQL category column. Do not add database migrations or modify existing records.
+> 7. Preserve the current wedding-themed styling, responsive layout, task sorting, completed-task grouping, and all CRUD functionality.
+> 8. Do not add dependencies or unrelated features.
+>
+> Follow AGENTS.md and append this exact prompt to prompt-history.md.
+>
+> Run TypeScript, ESLint, and production build checks. Summarize the changes and show the relevant diff.
+>
+> Do not commit, push, or run migrations.
+
+### Inferred details
+
+- **Context:** Category fields are currently free text, so inconsistent values can be entered across Create and Edit.
+- **Task:** Provide a shared fixed category list in both forms and enforce it server-side while allowing an existing legacy category to remain selected during an update.
+- **Format:** Update the server actions and form controls, add one shared category constant, and document the change with checks and a focused diff summary.
+- **Constraints:** Keep the Prisma schema, saved records, CRUD behavior, styling, and task grouping unchanged; add no dependencies; do not run migrations, commit, or push.

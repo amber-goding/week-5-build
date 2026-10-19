@@ -413,6 +413,40 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-bottom: 1px solid var(--taupe);
 }
 
+.task-section-heading {
+  color: var(--plum);
+  font-family: var(--font-editorial);
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 1.25rem 0 0.25rem;
+}
+
+.completed-task-section {
+  border-top: 1px solid var(--taupe);
+  margin-top: 1.5rem;
+  padding-top: 0.25rem;
+}
+
+.task-section-empty {
+  color: var(--ink-muted);
+  font-size: 0.88rem;
+  padding: 1rem 0;
+}
+
+.task-entry-completed .task-number {
+  color: var(--taupe);
+}
+
+.task-entry-completed .task-title-row h4 {
+  color: var(--plum-deep);
+}
+
+.task-entry-completed .task-notes {
+  border-color: var(--taupe);
+}
+
 .task-entry {
   display: grid;
   gap: 1rem;
@@ -447,7 +481,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   text-transform: uppercase;
 }
 
-.task-title-row h3 {
+.task-title-row h3,
+.task-title-row h4 {
   color: var(--charcoal);
   font-family: var(--font-editorial);
   font-size: clamp(1.35rem, 2vw, 1.7rem);
@@ -534,6 +569,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 0.55rem;
 }
 
+.task-action-buttons > button {
+  min-width: 6.25rem;
+}
+
 .edit-button,
 .save-edit-button,
 .cancel-edit-button,
@@ -562,11 +601,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 0.5rem;
 }
 
-.cancel-edit-button,
-.delete-button {
+.cancel-edit-button {
   background: transparent;
   border: 1px solid var(--taupe);
   color: var(--plum);
+}
+
+.delete-button {
+  background: rgb(173 143 157 / 12%);
+  border: 1px solid var(--mauve);
+  color: var(--plum-deep);
+  gap: 0.5rem;
 }
 
 .edit-button:hover:not(:disabled),
@@ -574,6 +619,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .delete-button:hover:not(:disabled) {
   background: var(--ivory-deep);
   border-color: var(--mauve);
+}
+
+.delete-button:hover:not(:disabled) {
+  background: rgb(173 143 157 / 25%);
+  border-color: var(--plum);
 }
 
 .edit-button-icon,

@@ -4,14 +4,14 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition, type FormEvent } from "react";
 
 import { createWeddingTask } from "@/app/actions";
+import { WEDDING_TASK_CATEGORIES } from "@/lib/wedding-task-categories";
 
 type SubmissionResult =
   | { success: true }
   | { success: false; error: string }
   | null;
 
-const fieldClasses =
-  "w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-950 outline-none transition focus:border-rose-500 focus:ring-2 focus:ring-rose-200 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:focus:border-rose-400 dark:focus:ring-rose-950";
+const fieldClasses = "field-control";
 
 export function AddWeddingTaskForm() {
   const router = useRouter();
@@ -46,29 +46,25 @@ export function AddWeddingTaskForm() {
   }
 
   return (
-    <section className="mx-auto w-full max-w-xl rounded-2xl bg-white p-6 shadow-lg sm:p-8 dark:bg-zinc-900">
-      <div className="mb-6">
-        <p className="text-sm font-semibold uppercase tracking-widest text-rose-600 dark:text-rose-400">
-          Wedding Planning Tracker
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
-          Add a wedding task
-        </h1>
-        <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-          Capture one planning task at a time. You can add the rest of the
-          tracker later.
+    <section className="task-composer" aria-labelledby="add-task-heading">
+      <div className="composer-heading">
+        <p className="eyebrow">The next thoughtful detail</p>
+        <h2 id="add-task-heading">
+          Every detail, beautifully <em>placed</em>
+        </h2>
+        <p>
+          Capture what comes next, give it a thoughtful timeline, and keep the
+          notes that matter close at hand.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <fieldset disabled={isPending} className="space-y-5">
-          <div>
-            <label
-              htmlFor="title"
-              className="mb-1.5 block text-sm font-medium text-zinc-800 dark:text-zinc-200"
-            >
-              Title
-            </label>
+      <form onSubmit={handleSubmit}>
+        <fieldset disabled={isPending} className="form-grid">
+          <div className="field-group field-span-full">
+            <div className="label-row">
+              <label htmlFor="title">Task title</label>
+              <span>Required</span>
+            </div>
             <input
               id="title"
               name="title"
@@ -76,55 +72,45 @@ export function AddWeddingTaskForm() {
               maxLength={200}
               required
               className={fieldClasses}
-              placeholder="Book the photographer"
+              placeholder="Reserve the ceremony venue"
             />
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div>
-              <label
-                htmlFor="category"
-                className="mb-1.5 block text-sm font-medium text-zinc-800 dark:text-zinc-200"
-              >
-                Category
-              </label>
-              <input
-                id="category"
-                name="category"
-                type="text"
-                defaultValue="General"
-                maxLength={100}
-                className={fieldClasses}
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="status"
-                className="mb-1.5 block text-sm font-medium text-zinc-800 dark:text-zinc-200"
-              >
-                Status
-              </label>
-              <select
-                id="status"
-                name="status"
-                defaultValue="Not Started"
-                className={fieldClasses}
-              >
-                <option>Not Started</option>
-                <option>In Progress</option>
-                <option>Completed</option>
-              </select>
-            </div>
+          <div className="field-group">
+            <label htmlFor="category">Category</label>
+            <select
+              id="category"
+              name="category"
+              defaultValue="Other"
+              className={fieldClasses}
+            >
+              {WEDDING_TASK_CATEGORIES.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
           </div>
 
-          <div>
-            <label
-              htmlFor="dueDate"
-              className="mb-1.5 block text-sm font-medium text-zinc-800 dark:text-zinc-200"
+          <div className="field-group">
+            <label htmlFor="status">Status</label>
+            <select
+              id="status"
+              name="status"
+              defaultValue="Not Started"
+              className={fieldClasses}
             >
-              Due date <span className="text-zinc-500">(optional)</span>
-            </label>
+              <option>Not Started</option>
+              <option>In Progress</option>
+              <option>Completed</option>
+            </select>
+          </div>
+
+          <div className="field-group field-span-full">
+            <div className="label-row">
+              <label htmlFor="dueDate">Due date</label>
+              <span>Optional</span>
+            </div>
             <input
               id="dueDate"
               name="dueDate"
@@ -133,42 +119,36 @@ export function AddWeddingTaskForm() {
             />
           </div>
 
-          <div>
-            <label
-              htmlFor="notes"
-              className="mb-1.5 block text-sm font-medium text-zinc-800 dark:text-zinc-200"
-            >
-              Notes <span className="text-zinc-500">(optional)</span>
-            </label>
+          <div className="field-group field-span-full">
+            <div className="label-row">
+              <label htmlFor="notes">Notes</label>
+              <span>Optional</span>
+            </div>
             <textarea
               id="notes"
               name="notes"
               rows={4}
               maxLength={2000}
               className={fieldClasses}
-              placeholder="Add any details, contacts, or reminders."
+              placeholder="Add contacts, questions, or details to remember."
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-rose-600 px-4 py-2.5 font-semibold text-white transition hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 dark:focus:ring-offset-zinc-900"
-          >
-            {isPending ? "Saving…" : "Save wedding task"}
+          <button type="submit" className="submit-button">
+            <span>{isPending ? "Saving..." : "Add to the plan"}</span>
+            <span aria-hidden="true">→</span>
           </button>
         </fieldset>
 
         {result && (
           <p
             aria-live="polite"
-            className={`rounded-lg px-4 py-3 text-sm ${
-              result.success
-                ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200"
-                : "bg-red-50 text-red-800 dark:bg-red-950 dark:text-red-200"
+            className={`form-message ${
+              result.success ? "form-message-success" : "form-message-error"
             }`}
           >
             {result.success
-              ? "Wedding task saved successfully."
+              ? "Your wedding task has been added to the plan."
               : result.error}
           </p>
         )}

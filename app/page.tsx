@@ -16,12 +16,114 @@ const dueDateFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
 });
 
+type WeddingTaskListItem = {
+  id: number;
+  title: string;
+  category: string;
+  status: string;
+  dueDate: Date | null;
+  notes: string | null;
+  createdAt: Date;
+};
+
+function compareByCreation(taskA: WeddingTaskListItem, taskB: WeddingTaskListItem) {
+  return (
+    taskB.createdAt.getTime() - taskA.createdAt.getTime() ||
+    taskB.id - taskA.id
+  );
+}
+
+function compareActiveTasks(taskA: WeddingTaskListItem, taskB: WeddingTaskListItem) {
+  if (taskA.dueDate && !taskB.dueDate) return -1;
+  if (!taskA.dueDate && taskB.dueDate) return 1;
+
+  if (taskA.dueDate && taskB.dueDate) {
+    const dueDateDifference =
+      taskA.dueDate.getTime() - taskB.dueDate.getTime();
+
+    if (dueDateDifference !== 0) return dueDateDifference;
+  }
+
+  return compareByCreation(taskA, taskB);
+}
+
+function WeddingTaskEntries({
+  tasks,
+  completed = false,
+}: {
+  tasks: WeddingTaskListItem[];
+  completed?: boolean;
+}) {
+  return (
+    <ol className={`task-list${completed ? " task-list-completed" : ""}`}>
+      {tasks.map((task, index) => (
+        <li key={task.id}>
+          <article
+            className={`task-entry${completed ? " task-entry-completed" : ""}`}
+          >
+            <p className="task-number" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </p>
+
+            <div className="task-content">
+              <div className="task-title-row">
+                <div>
+                  <p className="task-category">{task.category}</p>
+                  <h4>{task.title}</h4>
+                </div>
+                <span
+                  className={
+                    statusStyles[task.status] ?? statusStyles["Not Started"]
+                  }
+                >
+                  {task.status}
+                </span>
+              </div>
+
+              <dl className="task-meta">
+                <div>
+                  <dt>Due</dt>
+                  <dd>
+                    {task.dueDate ? (
+                      <time dateTime={task.dueDate.toISOString().slice(0, 10)}>
+                        {dueDateFormatter.format(task.dueDate)}
+                      </time>
+                    ) : (
+                      "Open timeline"
+                    )}
+                  </dd>
+                </div>
+              </dl>
+
+              {task.notes && <p className="task-notes">{task.notes}</p>}
+
+              <EditWeddingTaskForm
+                task={{
+                  id: task.id,
+                  title: task.title,
+                  category: task.category,
+                  status: task.status,
+                  dueDate: task.dueDate
+                    ? task.dueDate.toISOString().slice(0, 10)
+                    : "",
+                  notes: task.notes ?? "",
+                }}
+              />
+            </div>
+          </article>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 async function WeddingTaskList() {
   await connection();
 
   const tasks = await prisma.weddingTask.findMany({
     select: {
       id: true,
+      createdAt: true,
       title: true,
       category: true,
       status: true,
@@ -30,6 +132,13 @@ async function WeddingTaskList() {
     },
     orderBy: [{ createdAt: "desc" }, { id: "desc" }],
   });
+
+  const completedTasks = tasks
+    .filter((task) => task.status === "Completed")
+    .sort(compareByCreation);
+  const activeTasks = tasks
+    .filter((task) => task.status !== "Completed")
+    .sort(compareActiveTasks);
 
   return (
     <section className="task-ledger" aria-labelledby="task-list-heading">
@@ -46,76 +155,40 @@ async function WeddingTaskList() {
         </p>
       </div>
 
-      {tasks.length === 0 ? (
-        <div className="empty-state">
-          <p className="empty-state-kicker">Your plan begins here</p>
-          <p>
-            Add the first detail from the planning panel and it will appear in
-            this journal.
+      <section className="task-section" aria-labelledby="active-tasks-heading">
+        <h3 className="task-section-heading" id="active-tasks-heading">
+          Active Tasks
+        </h3>
+        {activeTasks.length > 0 ? (
+          <WeddingTaskEntries tasks={activeTasks} />
+        ) : tasks.length === 0 ? (
+          <div className="empty-state">
+            <p className="empty-state-kicker">Your plan begins here</p>
+            <p>
+              Add the first detail from the planning panel and it will appear
+              in this journal.
+            </p>
+          </div>
+        ) : (
+          <p className="task-section-empty">
+            No active tasks. Your completed tasks are listed below.
           </p>
-        </div>
-      ) : (
-        <ol className="task-list">
-          {tasks.map((task, index) => (
-            <li key={task.id}>
-              <article className="task-entry">
-                <p className="task-number" aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
+        )}
+      </section>
 
-                <div className="task-content">
-                  <div className="task-title-row">
-                    <div>
-                      <p className="task-category">{task.category}</p>
-                      <h3>{task.title}</h3>
-                    </div>
-                    <span
-                      className={
-                        statusStyles[task.status] ??
-                        statusStyles["Not Started"]
-                      }
-                    >
-                      {task.status}
-                    </span>
-                  </div>
-
-                  <dl className="task-meta">
-                    <div>
-                      <dt>Due</dt>
-                      <dd>
-                        {task.dueDate ? (
-                          <time
-                            dateTime={task.dueDate.toISOString().slice(0, 10)}
-                          >
-                            {dueDateFormatter.format(task.dueDate)}
-                          </time>
-                        ) : (
-                          "Open timeline"
-                        )}
-                      </dd>
-                    </div>
-                  </dl>
-
-                  {task.notes && <p className="task-notes">{task.notes}</p>}
-
-                  <EditWeddingTaskForm
-                    task={{
-                      id: task.id,
-                      title: task.title,
-                      category: task.category,
-                      status: task.status,
-                      dueDate: task.dueDate
-                        ? task.dueDate.toISOString().slice(0, 10)
-                        : "",
-                      notes: task.notes ?? "",
-                    }}
-                  />
-                </div>
-              </article>
-            </li>
-          ))}
-        </ol>
-      )}
+      <section
+        className="task-section completed-task-section"
+        aria-labelledby="completed-tasks-heading"
+      >
+        <h3 className="task-section-heading" id="completed-tasks-heading">
+          Completed Tasks
+        </h3>
+        {completedTasks.length > 0 ? (
+          <WeddingTaskEntries tasks={completedTasks} completed />
+        ) : (
+          <p className="task-section-empty">No completed tasks yet.</p>
+        )}
+      </section>
     </section>
   );
 }

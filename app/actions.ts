@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { WEDDING_TASK_CATEGORIES } from "@/lib/wedding-task-categories";
 
 const MAX_TITLE_LENGTH = 200;
 const MAX_CATEGORY_LENGTH = 100;
@@ -10,6 +11,7 @@ const VALID_STATUSES = new Set([
   "In Progress",
   "Completed",
 ]);
+const VALID_CATEGORIES: ReadonlySet<string> = new Set(WEDDING_TASK_CATEGORIES);
 
 function getTextField(formData: FormData, name: string) {
   const value = formData.get(name);
@@ -50,9 +52,12 @@ function parseDueDate(value: string) {
   return date;
 }
 
-function validateWeddingTaskInput(formData: FormData) {
+function validateWeddingTaskInput(
+  formData: FormData,
+  existingCategory?: string,
+) {
   const title = getTextField(formData, "title");
-  const category = getTextField(formData, "category") || "General";
+  const category = getTextField(formData, "category") || "Other";
   const status = getTextField(formData, "status") || "Not Started";
   const dueDateValue = getTextField(formData, "dueDate");
   const notes = getTextField(formData, "notes");
@@ -73,6 +78,10 @@ function validateWeddingTaskInput(formData: FormData) {
       success: false,
       error: `Category must be ${MAX_CATEGORY_LENGTH} characters or fewer.`,
     } as const;
+  }
+
+  if (!VALID_CATEGORIES.has(category) && category !== existingCategory) {
+    return { success: false, error: "Select a valid category." } as const;
   }
 
   if (!VALID_STATUSES.has(status)) {
@@ -138,13 +147,25 @@ export async function updateWeddingTask(formData: FormData) {
     } as const;
   }
 
-  const input = validateWeddingTaskInput(formData);
-
-  if (!input.success) {
-    return input;
-  }
-
   try {
+    const existingTask = await prisma.weddingTask.findUnique({
+      where: { id },
+      select: { category: true },
+    });
+
+    if (!existingTask) {
+      return {
+        success: false,
+        error: "Wedding task not found.",
+      } as const;
+    }
+
+    const input = validateWeddingTaskInput(formData, existingTask.category);
+
+    if (!input.success) {
+      return input;
+    }
+
     const result = await prisma.weddingTask.updateMany({
       where: { id },
       data: input.data,
