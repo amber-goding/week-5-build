@@ -200,3 +200,74 @@
 - **Task:** Generate Prisma Client at the configured output path and add a singleton PostgreSQL-adapter client that prefers the pooled application URL.
 - **Format:** Provide a focused TypeScript module, show the scoped diff, and summarize generation, type-check, and lint results.
 - **Constraints:** Keep credentials server-only; preserve the direct migration URL and existing schema/configuration; do not modify the database, run migrations, add routes or UI, install packages, commit, or push.
+
+## 10. Implement the WeddingTask create action
+
+### Exact prompt
+
+> Implement only the server-side Create operation for our Wedding Planning Tracker.
+>
+> Create `app/actions.ts` with a Next.js Server Action named `createWeddingTask` that:
+>
+> - Accepts FormData.
+> - Validates a nonempty title and reasonable field lengths.
+> - Accepts category, status, optional due date, and optional notes.
+> - Restricts status to "Not Started", "In Progress", or "Completed".
+> - Uses the existing `prisma` export from `lib/prisma.ts` to save a WeddingTask.
+> - Returns a simple success or error result without exposing internal database details.
+>
+> Do not create forms, pages, API routes, Read/Update/Delete functionality, or install packages. Do not modify the database schema or run migrations.
+>
+> Follow `AGENTS.md` and append this prompt to `prompt-history.md`. Run TypeScript and focused lint checks, then show and explain the diff. Do not commit or push.
+
+### Inferred details
+
+- **Context:** Add the first server-side application operation on top of the generated Prisma Client singleton and migrated `WeddingTask` table.
+- **Task:** Implement a narrowly scoped Server Action that validates form input and creates one wedding task with safe return values.
+- **Format:** Use a dedicated `app/actions.ts` module with explicit server-side validation, then show and explain the focused diff and verification results.
+- **Constraints:** Add Create only; do not add forms, pages, API routes, Read/Update/Delete operations, dependencies, schema changes, migrations, commits, or pushes.
+
+## 11. Build the Add Wedding Task form
+
+### Exact prompt
+
+> Build a minimal Add Wedding Task form to test our existing `createWeddingTask` Server Action.
+>
+> Requirements:
+>
+> 1. Replace the default Next.js starter content in `app/page.tsx` with a simple wedding task entry page.
+> 2. Include fields for title, category, status, optional due date, and optional notes.
+> 3. Connect the form to the existing `createWeddingTask` action without rewriting its validation or database logic.
+> 4. Display success and error messages after submission.
+> 5. Clear the form only after a successful save.
+> 6. Use existing Tailwind CSS for simple, responsive styling.
+> 7. Keep database operations server-side.
+>
+> Do not implement Read, Update, Delete, authentication, new dependencies, or additional pages. Do not modify the Prisma schema or run migrations.
+>
+> Follow `AGENTS.md` and append this prompt to `prompt-history.md`. Run TypeScript and ESLint checks, show the diff, and explain how the form sends data to the server.
+>
+> Do not commit or push.
+
+### Inferred details
+
+- **Context:** Add a minimal browser interface for exercising the existing create-only Server Action.
+- **Task:** Replace the starter page with a responsive form that submits the expected fields, reports the action result, and resets only after success.
+- **Format:** Use the existing Tailwind setup in `app/page.tsx`, then show the focused diff and explain the client-to-server submission flow.
+- **Constraints:** Reuse the existing Server Action unchanged; do not add other CRUD operations, authentication, dependencies, pages, schema changes, migrations, commits, or pushes.
+
+## 12. Improve the date-picker icon contrast
+
+### Exact prompt
+
+> The due date picker works, but its calendar icon is difficult to see because it blends into the background.
+> Improve the calendar icon's visibility and contrast in the existing wedding task form. Keep the current design and make the smallest necessary CSS change.
+> Do not modify form behavior, validation, database logic, or unrelated styling.
+> Follow `AGENTS.md`, append this prompt to `prompt-history.md`, run appropriate checks, and show the diff. Do not commit or push.
+
+### Inferred details
+
+- **Context:** Correct a native date-input contrast issue in the existing responsive wedding-task form, especially in dark mode.
+- **Task:** Make the browser-rendered calendar indicator use a color scheme that contrasts with the dark input background.
+- **Format:** Add one narrowly scoped global CSS rule, show the focused diff, and report verification results.
+- **Constraints:** Modify only `app/globals.css` and `prompt-history.md`; preserve form behavior, validation, database logic, design, and unrelated styling; do not commit or push.

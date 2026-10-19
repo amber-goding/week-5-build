@@ -1,69 +1,177 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useTransition, type FormEvent } from "react";
+
+import { createWeddingTask } from "@/app/actions";
+
+type SubmissionResult =
+  | { success: true }
+  | { success: false; error: string }
+  | null;
+
+const fieldClasses =
+  "w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-950 outline-none transition focus:border-rose-500 focus:ring-2 focus:ring-rose-200 disabled:cursor-not-allowed disabled:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:focus:border-rose-400 dark:focus:ring-rose-950";
 
 export default function Home() {
+  const [result, setResult] = useState<SubmissionResult>(null);
+  const [isPending, startTransition] = useTransition();
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    setResult(null);
+
+    startTransition(async () => {
+      try {
+        const nextResult = await createWeddingTask(formData);
+
+        setResult(nextResult);
+
+        if (nextResult.success) {
+          form.reset();
+        }
+      } catch {
+        setResult({
+          success: false,
+          error: "Unable to submit the wedding task. Please try again.",
+        });
+      }
+    });
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <main className="flex min-h-screen items-center justify-center bg-rose-50 px-4 py-10 dark:bg-zinc-950">
+      <section className="w-full max-w-xl rounded-2xl bg-white p-6 shadow-lg sm:p-8 dark:bg-zinc-900">
+        <div className="mb-6">
+          <p className="text-sm font-semibold uppercase tracking-widest text-rose-600 dark:text-rose-400">
+            Wedding Planning Tracker
+          </p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+            Add a wedding task
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+            Capture one planning task at a time. You can add the rest of the
+            tracker later.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <fieldset disabled={isPending} className="space-y-5">
+            <div>
+              <label
+                htmlFor="title"
+                className="mb-1.5 block text-sm font-medium text-zinc-800 dark:text-zinc-200"
+              >
+                Title
+              </label>
+              <input
+                id="title"
+                name="title"
+                type="text"
+                maxLength={200}
+                required
+                className={fieldClasses}
+                placeholder="Book the photographer"
+              />
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="category"
+                  className="mb-1.5 block text-sm font-medium text-zinc-800 dark:text-zinc-200"
+                >
+                  Category
+                </label>
+                <input
+                  id="category"
+                  name="category"
+                  type="text"
+                  defaultValue="General"
+                  maxLength={100}
+                  className={fieldClasses}
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="status"
+                  className="mb-1.5 block text-sm font-medium text-zinc-800 dark:text-zinc-200"
+                >
+                  Status
+                </label>
+                <select
+                  id="status"
+                  name="status"
+                  defaultValue="Not Started"
+                  className={fieldClasses}
+                >
+                  <option>Not Started</option>
+                  <option>In Progress</option>
+                  <option>Completed</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="dueDate"
+                className="mb-1.5 block text-sm font-medium text-zinc-800 dark:text-zinc-200"
+              >
+                Due date <span className="text-zinc-500">(optional)</span>
+              </label>
+              <input
+                id="dueDate"
+                name="dueDate"
+                type="date"
+                className={fieldClasses}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="notes"
+                className="mb-1.5 block text-sm font-medium text-zinc-800 dark:text-zinc-200"
+              >
+                Notes <span className="text-zinc-500">(optional)</span>
+              </label>
+              <textarea
+                id="notes"
+                name="notes"
+                rows={4}
+                maxLength={2000}
+                className={fieldClasses}
+                placeholder="Add any details, contacts, or reminders."
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full rounded-lg bg-rose-600 px-4 py-2.5 font-semibold text-white transition hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 dark:focus:ring-offset-zinc-900"
+            >
+              {isPending ? "Saving…" : "Save wedding task"}
+            </button>
+          </fieldset>
+
+          {result && (
+            <p
+              aria-live="polite"
+              className={`rounded-lg px-4 py-3 text-sm ${
+                result.success
+                  ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200"
+                  : "bg-red-50 text-red-800 dark:bg-red-950 dark:text-red-200"
+              }`}
+            >
+              {result.success
+                ? "Wedding task saved successfully."
+                : result.error}
+            </p>
+          )}
+        </form>
+      </section>
+    </main>
   );
 }
