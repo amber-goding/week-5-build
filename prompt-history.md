@@ -87,3 +87,92 @@
 - **Task:** Ignore the generated agent-skill directories and their lock file, then record this prompt as entry #4.
 - **Format:** Add a focused, labeled `.gitignore` block and retain the established numbered Markdown prompt-history structure.
 - **Constraints:** Modify only `.gitignore` and `prompt-history.md`; preserve all existing ignore rules and history; do not delete files, install packages, migrate, commit, or push.
+
+## 5. Verify the Neon database connection
+
+### Exact prompt
+
+> Verify that Prisma 7 can connect to my existing Neon PostgreSQL database.
+>
+> 1. Confirm `prisma7.config.ts` reads `DATABASE_URL` from `.env`.
+> 2. Run `npx prisma db pull --print` to test the connection without overwriting `prisma/schema.prisma`.
+> 3. Report whether the connection succeeds and whether the database contains any tables.
+> 4. Do not display connection strings, passwords, or other secrets.
+> 5. Do not modify the schema, create tables, run migrations, install packages, or generate Prisma Client.
+> 6. Follow `AGENTS.md` and append this prompt to `prompt-history.md`.
+>
+> Explain the results in beginner-friendly language and summarize the file changes.
+
+### Inferred details
+
+- **Context:** Confirm that the existing Prisma 7 setup can safely reach the configured Neon PostgreSQL database before database changes are made.
+- **Task:** Verify environment loading, perform print-only database introspection, report connectivity and whether tables exist, and record this prompt as entry #5.
+- **Format:** Give a beginner-friendly result summary and identify the sole documentation change.
+- **Constraints:** Do not expose secrets, overwrite the Prisma schema, create tables, run migrations, install packages, generate Prisma Client, commit, or push; modify only `prompt-history.md`.
+
+## 6. Prepare the first Prisma migration
+
+### Exact prompt
+
+> Prepare our first Prisma migration for the existing Neon PostgreSQL database.
+>
+> 1. Inspect `prisma/schema.prisma` and `prisma7.config.ts`.
+> 2. Confirm the `WeddingTask` model is valid and the configuration is compatible with Prisma 7.10.1.
+> 3. Identify the exact command needed to create the first migration, named `init_wedding_tasks`.
+> 4. Explain which files and database objects the migration will create or modify.
+> 5. Identify any connection or configuration issues that could prevent the migration.
+>
+> Do not execute the migration, modify the database, install packages, or change configuration files. Do not expose credentials.
+>
+> Follow `AGENTS.md` and append this prompt to `prompt-history.md`. Summarize the findings concisely.
+
+### Inferred details
+
+- **Context:** Review the validated Prisma 7 schema and empty Neon database before authorizing the initial migration.
+- **Task:** Confirm migration readiness, provide the named migration command, explain its file and database effects, and identify likely blockers.
+- **Format:** Give a concise readiness summary with the exact command and clearly separated effects and risks.
+- **Constraints:** Modify only `prompt-history.md`; do not expose credentials, execute a migration, modify the database, install packages, generate Prisma Client, or change configuration.
+
+## 7. Generate the initial create-only migration
+
+### Exact prompt
+
+> Generate the initial Prisma migration named `init_wedding_tasks` using Prisma 7.10.1 and the existing configuration.
+> Run:\
+> `npx prisma migrate dev --name init_wedding_tasks --create-only --config prisma7.config.ts`
+> If a shadow-database permission error occurs, stop and report it. Do not attempt workarounds or change database permissions.
+> If successful, inspect the generated SQL and confirm it creates only the expected `WeddingTask` table, fields, defaults, and primary key.
+> Do not apply the migration to Neon, generate Prisma Client, install packages, commit, or push.
+> Follow `AGENTS.md`, append this prompt to `prompt-history.md`, and summarize the results and file changes.
+
+### Inferred details
+
+- **Context:** Materialize the reviewed initial Prisma migration as SQL without applying it to the empty Neon database.
+- **Task:** Run the authorized create-only migration command, stop on shadow-database permission failure, and otherwise inspect the generated SQL for exact schema scope.
+- **Format:** Report command success, SQL contents, verification results, and changed files concisely.
+- **Constraints:** Use Prisma 7.10.1 and the existing configuration; do not work around permission failures, apply the migration, generate Prisma Client, install packages, commit, push, expose secrets, or change unrelated files.
+
+## 8. Apply the initial migration to Neon
+
+### Exact prompt
+
+> Apply the reviewed `init_wedding_tasks` migration to my existing Neon PostgreSQL database.
+>
+> 1. Run `npx prisma migrate dev --config prisma7.config.ts`.
+> 2. If successful, run `npx prisma migrate status --config prisma7.config.ts` to verify migration status.
+> 3. Confirm that the `WeddingTask` table was created with the expected fields.
+> 4. Do not modify the schema, configuration, or migration SQL.
+> 5. Do not insert, update, or delete any wedding task records.
+> 6. Do not display credentials or connection strings.
+> 7. If an error occurs, stop and explain it without attempting additional fixes.
+>
+> Follow `AGENTS.md` and append this prompt to `prompt-history.md`.
+>
+> Report the results and any file changes. Do not commit or push.
+
+### Inferred details
+
+- **Context:** Deploy the reviewed initial migration to the connected, previously empty Neon PostgreSQL database.
+- **Task:** Apply the pending migration, verify migration status, and confirm the resulting live `WeddingTask` table structure.
+- **Format:** Report the migration, status, table verification, and file changes clearly and concisely.
+- **Constraints:** Stop after any error; do not modify schema, configuration, or migration SQL; do not change wedding task records, expose secrets, commit, or push.
