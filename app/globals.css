@@ -17,6 +17,10 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+
+  input[type="date"] {
+    color-scheme: dark;
+  }
 }
 
 body {
