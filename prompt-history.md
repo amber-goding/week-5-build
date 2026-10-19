@@ -271,3 +271,49 @@
 - **Task:** Make the browser-rendered calendar indicator use a color scheme that contrasts with the dark input background.
 - **Format:** Add one narrowly scoped global CSS rule, show the focused diff, and report verification results.
 - **Constraints:** Modify only `app/globals.css` and `prompt-history.md`; preserve form behavior, validation, database logic, design, and unrelated styling; do not commit or push.
+
+## 13. Implement WeddingTask read functionality
+
+### Exact prompt
+
+> Implement the Read functionality for our Wedding Planning Tracker.
+>
+> 1. Retrieve all saved `WeddingTask` records from Neon using the existing Prisma Client.
+> 2. Display the tasks beneath the existing Add Wedding Task form in a clean, responsive list.
+> 3. Show each task's title, category, status, optional due date, and optional notes.
+> 4. Display a helpful empty-state message when no tasks exist.
+> 5. Ensure the list reflects newly saved tasks and persists after a browser refresh.
+> 6. Keep all database queries server-side and preserve the working Create functionality.
+> 7. Use the existing Next.js 16 architecture and Tailwind CSS. Avoid new dependencies.
+>
+> Do not implement Update, Delete, authentication, filtering, or unrelated features. Do not modify the database schema or run migrations.
+>
+> Follow `AGENTS.md` and append this prompt to `prompt-history.md`. Run TypeScript and ESLint checks, show the diff, and explain the data flow.
+>
+> Do not commit or push.
+
+### Inferred details
+
+- **Context:** Add server-rendered visibility for records created through the existing wedding-task form.
+- **Task:** Query all wedding tasks in a Server Component, render a responsive list and empty state, and refresh that server-rendered data after successful creates.
+- **Format:** Preserve the existing styled form in a focused Client Component and render the task list beneath it from `app/page.tsx`.
+- **Constraints:** Keep queries server-side and Create working; do not add Update, Delete, authentication, filtering, dependencies, schema changes, migrations, commits, or pushes.
+
+## 14. Fix the blocking-route error with Suspense
+
+### Exact prompt
+
+> Fix the Next.js 16.4.2 blocking-route error on `/`.
+> The error points to `await connection()` in `app/page.tsx`, where uncached database access occurs outside React Suspense.
+> Refactor the page so the Prisma task query and any required `connection()` call execute inside an async Server Component wrapped in `<Suspense>` with a simple loading fallback.
+> Preserve the existing Add Task form, task cards, `router.refresh()`, styling, and Create/Read functionality.
+> Do not disable Cache Components, use caching that could return stale tasks, add dependencies, or modify Prisma or database configuration.
+> Follow `AGENTS.md` and append this prompt to `prompt-history.md`. Run TypeScript, ESLint, and build checks. Show the diff and explain the fix.
+> Do not commit or push.
+
+### Inferred details
+
+- **Context:** Next.js 16.4.2 blocks the root route because request-time database work currently begins above any React Suspense boundary.
+- **Task:** Move `connection()` and the Prisma read into a nested async Server Component and stream it through a Suspense fallback.
+- **Format:** Make a focused page refactor, retain the existing UI, show the diff, and explain the runtime data flow and verification results.
+- **Constraints:** Preserve Create/Read behavior, `router.refresh()`, task cards, styling, and fresh request-time data; do not disable Cache Components, add caching or dependencies, change Prisma/database configuration, commit, or push.
