@@ -176,3 +176,27 @@
 - **Task:** Apply the pending migration, verify migration status, and confirm the resulting live `WeddingTask` table structure.
 - **Format:** Report the migration, status, table verification, and file changes clearly and concisely.
 - **Constraints:** Stop after any error; do not modify schema, configuration, or migration SQL; do not change wedding task records, expose secrets, commit, or push.
+
+## 9. Set up Prisma Client for Next.js
+
+### Exact prompt
+
+> &#x20; Set up Prisma Client for our existing Next.js 16, Prisma 7.10.1, and Neon PostgreSQL project.
+>
+> 1. Inspect the current Prisma generator configuration and generated-client output path.
+> 2. Generate Prisma Client using the existing schema.
+> 3. Create `lib/prisma.ts` to export a reusable Prisma Client singleton using `PrismaPg` from `@prisma/adapter-pg`.
+> 4. Use `DATABASE_URL_POOLED` for application queries if available, while preserving the existing direct `DATABASE_URL` configuration for migrations.
+> 5. Keep database credentials server-side.
+> 6. Verify the setup with appropriate TypeScript and lint checks.
+>
+> Follow `AGENTS.md` and append this prompt to `prompt-history.md`.
+>
+> Do not modify the database, run migrations, create API routes or UI components, install packages, commit, or push. Show the diff and summarize verification results.
+
+### Inferred details
+
+- **Context:** Add the reusable server-side Prisma runtime layer after the initial schema migration has been generated and applied.
+- **Task:** Generate Prisma Client at the configured output path and add a singleton PostgreSQL-adapter client that prefers the pooled application URL.
+- **Format:** Provide a focused TypeScript module, show the scoped diff, and summarize generation, type-check, and lint results.
+- **Constraints:** Keep credentials server-only; preserve the direct migration URL and existing schema/configuration; do not modify the database, run migrations, add routes or UI, install packages, commit, or push.
