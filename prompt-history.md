@@ -1168,3 +1168,108 @@
 - **Task:** Add coordinated client/server input limits, validate and bound Responses API output, classify safe failure messages, time out stalled requests, and preserve retryable input.
 - **Format:** Keep guardrail constants shared, retain the existing interface and server-only system prompt, and provide focused verification and manual simulation guidance.
 - **Constraints:** Do not expose credentials or raw provider details, add memory or unrelated features, redesign the interface, change Prisma or CRUD behavior, install dependencies, run migrations, commit, or push.
+
+## 39. Add a responsive, collapsible planner sidebar
+
+### Exact prompt
+
+> Implement the first presentation-ready layout improvement for Ever After Planner: a responsive, collapsible left navigation sidebar.
+>
+> **Context**
+>
+> - This is an existing Next.js 16 App Router wedding-planning application.
+> - The current dashboard contains working Wedding Task CRUD functionality and a working BrideZilla AI chat.
+> - This is a focused UI update. Preserve all existing functionality.
+> - Follow AGENTS.md and append this prompt to prompt-history.md using the established format.
+>
+> **Task**
+>
+> 1. Add an elegant, collapsible left sidebar consistent with the application's existing charcoal, plum, mauve, ivory, and champagne visual direction.
+> 2. Add navigation items in this order:
+>    - Dashboard
+>    - Wedding Tasks
+>    - Inspiration
+>    - Invitations
+>    - Budget Tracker
+>    - Vendors
+>    - Settings
+> 3. Visually group the items into Planning, Creative Studio, and Management.
+> 4. On desktop, show icons and labels when expanded; show icons with accessible labels/tooltips when collapsed.
+> 5. On mobile, use a menu button to open and close the sidebar as a drawer.
+> 6. Highlight the currently active destination.
+> 7. Keep the existing dashboard and Wedding Tasks functionality accessible. If separating them into routes would significantly expand the scope, do not perform that refactor yet.
+> 8. Do not create empty placeholder pages or dead navigation links for unfinished sections. Visually distinguish features that are not available yet.
+> 9. Maintain the existing responsive layout and use accessible keyboard navigation, focus styles, and appropriate mobile behavior.
+>
+> **Constraints**
+>
+> - No database or Prisma changes.
+> - No changes to the BrideZilla API or AI behavior.
+> - Do not move BrideZilla into its floating drawer yet; that is the next step.
+> - No new UI libraries or unnecessary dependencies.
+> - No unsolicited Git commits.
+> - Avoid unrelated refactoring, and keep changes focused on layout and navigation.
+>
+> **Verification**
+>
+> - Run lint, TypeScript checks, and production build.
+> - Verify that the sidebar expands and collapses, the mobile menu works, and existing Wedding Task and BrideZilla components remain functional.
+> - Report files changed, test results, remaining issues, and any navigation destinations intentionally left inactive.
+
+### Inferred details
+
+- **Context:** Ever After Planner needs a presentation-ready navigation shell around the existing server-rendered dashboard, task CRUD, and BrideZilla chat.
+- **Task:** Add a responsive client-side sidebar with grouped destinations, desktop collapse behavior, a mobile drawer, active in-page navigation, and clear unavailable states.
+- **Format:** Preserve the existing dashboard route and visual system, using focused React and CSS changes plus accessible labels, focus handling, and keyboard dismissal.
+- **Constraints:** Do not add routes, placeholder pages, dependencies, database or Prisma changes, BrideZilla behavior changes, unrelated refactors, commits, pushes, or migrations; run lint, TypeScript, and production build checks.
+
+## 40. Move BrideZilla into a floating drawer
+
+### Exact prompt
+
+> Implement Step 2 of the Ever After Planner presentation-ready UI: move the existing BrideZilla chat into a floating launcher and responsive right-side drawer.
+>
+> **Context**
+>
+> - The app already has a responsive, collapsible navigation sidebar in app/planner-shell.tsx.
+> - BrideZilla currently works as an embedded chat component on the dashboard.
+> - Preserve the existing AI request flow, input/output limits, loading states, timeout handling, error handling, and retry behavior.
+> - Follow AGENTS.md and append this exact prompt to prompt-history.md using the established format.
+>
+> **Task**
+>
+> 1. Add a fixed, elegant, pill-shaped "Ask BrideZilla" launcher near the bottom-right corner of the viewport, with a subtle Gothic-inspired icon or emblem using existing assets or lightweight CSS.
+> 2. Clicking the launcher opens BrideZilla in a right-side drawer that overlays the application without resizing the main layout.
+> 3. Use a comfortable desktop width of approximately 480px, responsive to narrower viewports. On mobile, the drawer should occupy the full screen.
+> 4. Place a clear BrideZilla title and Close button in the drawer header.
+> 5. Reuse the existing BrideZilla chat component and its behavior rather than replacing or rebuilding the AI integration.
+> 6. Keep the message content scrollable and the message input easily accessible.
+> 7. Support closing with the header Close button and Escape key. Manage focus appropriately when opening and closing; avoid keyboard focus reaching obscured content while the modal drawer is open.
+> 8. Ensure the launcher remains accessible while navigating Dashboard and Wedding Tasks, and does not obscure essential task controls.
+> 9. Maintain the established charcoal, plum, mauve, ivory, and champagne aesthetic. Make the interaction polished but understated.
+> 10. Remove the old embedded BrideZilla section from the dashboard so there is only one chat instance.
+>
+> **Constraints**
+>
+> - Do not modify the BrideZilla API route, AI prompts, or guardrail behavior.
+> - Do not implement saved conversations, authentication, new AI features, new pages, or database changes.
+> - Do not add a third-party drawer or modal library.
+> - Do not create or generate a character illustration yet; use a tasteful temporary icon until the visual identity is finalized.
+> - Do not introduce a full theme-switching system yet.
+> - Preserve existing Wedding Task CRUD and sidebar navigation.
+> - Keep changes focused and do not create Git commits.
+>
+> **Verification**
+>
+> - Run TypeScript, ESLint, production build, and git diff --check.
+> - Verify the old embedded chat is removed and only one BrideZilla chat instance is rendered.
+> - Verify drawer opening, closing, responsive sizing, focus management, scroll behavior, and working AI submission as far as the available environment allows.
+> - Clearly report any checks that require manual browser verification.
+> - Summarize changed files and any remaining issues.
+
+### Inferred details
+
+- **Context:** The presentation-ready shell is established, and BrideZilla now needs a persistent, globally accessible modal presentation without changing its tested AI behavior.
+- **Task:** Move the single existing chat instance into a fixed right-side drawer with an accessible launcher, responsive sizing, scroll containment, Escape handling, focus trapping, and focus restoration.
+- **Format:** Extend the existing client shell and palette with focused React and CSS changes, keeping the dashboard and chat implementation intact.
+- **Constraints:** Do not alter the AI route, prompt, guardrails, task CRUD, Prisma, database state, dependencies, pages, authentication, themes, or Git history; run TypeScript, ESLint, build, and diff checks.

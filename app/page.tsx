@@ -2,8 +2,8 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 
 import { AddWeddingTaskForm } from "@/app/add-wedding-task-form";
-import { BrideZillaChat } from "@/app/bridezilla-chat";
 import { EditWeddingTaskForm } from "@/app/edit-wedding-task-form";
+import { PlannerShell } from "@/app/planner-shell";
 import { prisma } from "@/lib/prisma";
 
 const statusStyles: Record<string, string> = {
@@ -217,52 +217,56 @@ function WeddingTaskListFallback() {
 
 export default function Home() {
   return (
-    <main className="planner-page">
-      <div className="planner-container">
-        <header className="editorial-hero">
-          <div className="brand-row">
-            <div className="brand-lockup">
-              <span className="brand-seal" aria-hidden="true">
-                EA
-              </span>
-              <div>
-                <p className="brand-name">Ever After</p>
-                <p className="brand-subtitle">Wedding planner</p>
+    <PlannerShell>
+      <main className="planner-page">
+        <div className="planner-container" id="dashboard">
+          <header className="editorial-hero">
+            <div className="brand-row">
+              <div className="brand-lockup">
+                <span className="brand-seal" aria-hidden="true">
+                  EA
+                </span>
+                <div>
+                  <p className="brand-name">Ever After</p>
+                  <p className="brand-subtitle">Wedding planner</p>
+                </div>
+              </div>
+              <p className="journal-label">A private planning journal</p>
+            </div>
+
+            <div className="hero-grid">
+              <h1 className="display-heading">
+                <span>Your celebration,</span>
+                <span>
+                  beautifully <em>considered.</em>
+                </span>
+              </h1>
+              <div className="hero-copy">
+                <p>
+                  A calm, considered place to shape the day—from the first
+                  meaningful decision to the final finishing touch.
+                </p>
+                {/* <p className="hero-note">Made for every way you celebrate.</p> */}
               </div>
             </div>
-            <p className="journal-label">A private planning journal</p>
-          </div>
+          </header>
 
-          <div className="hero-grid">
-            <h1 className="display-heading">
-              <span>Your celebration,</span>
-              <span>
-                beautifully <em>considered.</em>
-              </span>
-            </h1>
-            <div className="hero-copy">
-              <p>
-                A calm, considered place to shape the day—from the first
-                meaningful decision to the final finishing touch.
-              </p>
-              {/* <p className="hero-note">Made for every way you celebrate.</p> */}
+          <section
+            className="dashboard-frame"
+            id="wedding-tasks"
+            aria-label="Planning workspace"
+          >
+            <div className="composer-panel">
+              <AddWeddingTaskForm />
             </div>
-          </div>
-        </header>
-
-        <section className="dashboard-frame" aria-label="Planning workspace">
-          <div className="composer-panel">
-            <AddWeddingTaskForm />
-          </div>
-          <div className="ledger-panel">
-            <Suspense fallback={<WeddingTaskListFallback />}>
-              <WeddingTaskList />
-            </Suspense>
-          </div>
-        </section>
-
-        <BrideZillaChat />
-      </div>
-    </main>
+            <div className="ledger-panel">
+              <Suspense fallback={<WeddingTaskListFallback />}>
+                <WeddingTaskList />
+              </Suspense>
+            </div>
+          </section>
+        </div>
+      </main>
+    </PlannerShell>
   );
 }
