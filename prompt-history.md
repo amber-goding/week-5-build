@@ -1021,3 +1021,88 @@
 - **Task:** Validate the standard OpenAI key variable and Next.js environment behavior, verify Git protection for `.env`, document safe manual setup, and add a non-secret environment template if useful.
 - **Format:** Provide a concise security and setup report, plus focused configuration and prompt-history changes.
 - **Constraints:** Never inspect, expose, copy, or log secrets; do not modify `.env`, install dependencies, create an AI endpoint or chatbot, alter CRUD, styling, or Prisma files, run migrations, commit, or push.
+
+## 35. Implement the first working BrideZilla chatbot
+
+### Exact prompt
+
+> Implement the first working version of BrideZilla, an AI-powered Halloween wedding planning chatbot, inside the existing Ever After Planner application.
+>
+> Follow AGENTS.md, including reading the relevant bundled Next.js 16 documentation and appending this exact prompt to prompt-history.md.
+>
+> Requirements:
+>
+> 1. Add a simple, responsive BrideZilla chat interface to the existing dashboard without removing or changing the wedding task tracker.
+> 2. Create a dedicated server-side AI endpoint using the OpenAI API. Keep OPENAI_API_KEY exclusively on the server.
+> 3. Use the official OpenAI API with a model available to the configured account. Avoid unnecessary dependencies; if a model choice or package is uncertain, explain it rather than guessing.
+> 4. Place BrideZilla's system prompt directly in server-side code.
+>
+> Use this initial system prompt:
+>
+> "You are BrideZilla, a witty, theatrical, Halloween-inspired wedding planning assistant. Help users plan creative, organized, and memorable weddings. You specialize in gothic romance, elegant Halloween celebrations, and spooky wedding themes, but can help with other wedding styles. Keep your tone playful, supportive, and practical. Never insult users, invent confirmed bookings or vendor availability, or present guesses as verified facts. Give clear, actionable advice and acknowledge uncertainty when appropriate."
+>
+> 5. Allow the user to type a message, submit it, and see BrideZilla's response.
+> 6. Show a loading state while waiting for a reply.
+> 7. Display a clear indication that BrideZilla is an AI assistant.
+> 8. Keep the initial implementation to one user message and one AI response per request. Do not implement conversation memory yet.
+> 9. Do not save chat messages or automatically create, update, or delete wedding tasks.
+> 10. Keep the design consistent with the current charcoal, plum, mauve, and ivory palette. Give the chatbot a subtle gothic Halloween identity without redesigning the dashboard.
+> 11. Keep this first implementation focused on establishing and testing the API call. We will implement and test the full input, output, and failure guardrails in subsequent milestones.
+>
+> Security and scope:
+>
+> - Never read, display, print, or log API keys or database credentials.
+> - Never expose the API key to Client Components or browser responses.
+> - Do not modify the Prisma schema or run migrations.
+> - Do not modify existing CRUD Server Actions or task sorting.
+> - Do not add unrelated features or unnecessary dependencies.
+> - Do not commit or push.
+>
+> Verification:
+>
+> - Run TypeScript, ESLint, and production build checks.
+> - Identify the server-side AI call and system prompt in the changed code.
+> - Summarize all changed files and any dependencies added.
+> - Explain the data flow from the user's chat input to the AI response.
+> - Explain how I can manually test one successful BrideZilla conversation.
+>
+> Do not claim the live AI request was verified unless it actually succeeded.
+
+### Inferred details
+
+- **Context:** Ever After Planner needs its first focused BrideZilla experience while retaining the existing task-tracking dashboard and server-side credential boundary.
+- **Task:** Add a responsive single-turn chat interface and a server-only Route Handler that sends the supplied system prompt and one user message to the OpenAI Responses API.
+- **Format:** Use a focused Client Component, a dedicated JSON endpoint, the existing visual palette, and clear loading, AI identity, response, and error states.
+- **Constraints:** Keep secrets server-only; do not inspect credentials, persist chats, add memory, mutate tasks, change CRUD actions, task sorting, Prisma files, or schema, add unnecessary dependencies, run migrations, commit, or push; run TypeScript, ESLint, and production build checks.
+
+## 36. Diagnose the BrideZilla API HTTP 500 error
+
+### Exact prompt
+
+> Diagnose the HTTP 500 error from POST /api/bridezilla in Ever After Planner.
+> Review app/api/bridezilla/route.ts, focusing on configuration validation, the OpenAI Responses API request, HTTP error handling, and response-text extraction.
+> Check whether OPENAI_API_KEY and OPENAI_MODEL are expected and handled correctly, but never read, print, expose, or log their values.
+> Identify likely causes of the 500 error and explain how to distinguish missing configuration, authentication failures, unavailable models, rate limits, and malformed API responses.
+> Use only safe diagnostic information. Do not expose raw authorization headers, secrets, environment values, or sensitive response bodies.
+> Do not modify application code, install dependencies, run migrations, commit, or push. Follow AGENTS.md and log this prompt.
+> Report the most likely cause, supporting code evidence, and the smallest recommended fix. Do not implement the fix yet.
+
+### Inferred details
+
+- **Context:** The new single-turn BrideZilla Route Handler returns HTTP 500 during a local chat request and needs a security-conscious diagnosis before any fix is applied.
+- **Task:** Trace each route status path, validate the expected environment-variable names and Responses API shape, and distinguish local configuration failures from upstream authentication, model, rate-limit, network, and response-format failures.
+- **Format:** Provide the most likely cause first, cite precise code evidence, give a safe diagnostic matrix, and recommend the smallest unimplemented fix.
+- **Constraints:** Do not inspect or reveal environment values, authorization data, credentials, or sensitive provider bodies; modify only prompt history; do not install dependencies, run migrations, change application code, commit, or push.
+
+## 37. Locate an OpenAI API key and available model ID
+
+### Exact prompt
+
+> Where do I find my real key and a model ID available to your OpenAI project?
+
+### Inferred details
+
+- **Context:** BrideZilla requires locally configured OpenAI credentials and an account-accessible Responses API model before its first successful request.
+- **Task:** Explain where to create a project API key and how to identify an available model ID using official OpenAI resources.
+- **Format:** Provide concise dashboard navigation and safe `.env` setup guidance with official links.
+- **Constraints:** Do not inspect, request, expose, or log the credential value; do not modify `.env`, application code, dependencies, database state, or Git history.

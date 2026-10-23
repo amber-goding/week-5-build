@@ -2,6 +2,7 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 
 import { AddWeddingTaskForm } from "@/app/add-wedding-task-form";
+import { BrideZillaChat } from "@/app/bridezilla-chat";
 import { EditWeddingTaskForm } from "@/app/edit-wedding-task-form";
 import { prisma } from "@/lib/prisma";
 
@@ -259,6 +260,8 @@ export default function Home() {
             </Suspense>
           </div>
         </section>
+
+        <BrideZillaChat />
       </div>
     </main>
   );

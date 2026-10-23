@@ -769,6 +769,218 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-style: italic;
 }
 
+.bridezilla-panel {
+  background:
+    radial-gradient(circle at 92% 15%, rgb(173 143 157 / 14%), transparent 18rem),
+    var(--charcoal-soft);
+  border: 1px solid rgb(200 179 154 / 52%);
+  box-shadow: 0 1.25rem 3rem rgb(12 10 12 / 18%);
+  color: var(--ivory);
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  margin-top: 1.25rem;
+  overflow: hidden;
+  padding: clamp(1.5rem, 3.5vw, 3rem);
+  position: relative;
+}
+
+.bridezilla-panel::before {
+  border: 1px solid rgb(173 143 157 / 32%);
+  content: "";
+  inset: 0.55rem;
+  pointer-events: none;
+  position: absolute;
+}
+
+.bridezilla-intro,
+.bridezilla-chat-shell {
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.bridezilla-intro {
+  align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+}
+
+.bridezilla-mark {
+  align-items: center;
+  border: 1px solid var(--mauve);
+  border-radius: 50%;
+  color: var(--champagne);
+  display: flex;
+  flex: 0 0 auto;
+  font-family: var(--font-editorial);
+  font-size: 1.5rem;
+  height: 3.25rem;
+  justify-content: center;
+  width: 3.25rem;
+}
+
+.bridezilla-title-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.bridezilla-panel .eyebrow {
+  color: var(--champagne);
+}
+
+.ai-badge {
+  border: 1px solid rgb(173 143 157 / 75%);
+  border-radius: 999px;
+  color: #ddd2d8;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 0.25rem 0.5rem;
+  text-transform: uppercase;
+}
+
+.bridezilla-intro h2 {
+  font-family: var(--font-editorial);
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-top: 0.65rem;
+}
+
+.bridezilla-intro h2 em {
+  color: var(--mauve);
+  font-weight: 400;
+}
+
+.bridezilla-intro > div:last-child > p:last-child {
+  color: #d8d0cc;
+  font-size: 0.92rem;
+  margin-top: 0.9rem;
+  max-width: 34rem;
+}
+
+.bridezilla-chat-shell {
+  background: rgb(24 22 26 / 28%);
+  border: 1px solid rgb(196 184 177 / 35%);
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.chat-exchange {
+  display: grid;
+  gap: 0.85rem;
+  margin-bottom: 1.15rem;
+}
+
+.chat-message {
+  border-left: 3px solid;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  max-width: 95%;
+  overflow-wrap: anywhere;
+  padding: 0.8rem 0.95rem;
+  white-space: pre-wrap;
+}
+
+.chat-message-user {
+  background: rgb(247 243 239 / 9%);
+  border-color: var(--champagne);
+  justify-self: end;
+}
+
+.chat-message-assistant {
+  background: rgb(173 143 157 / 13%);
+  border-color: var(--mauve);
+}
+
+.chat-speaker {
+  color: var(--champagne);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+}
+
+.chat-loading {
+  color: #d8d0cc;
+  font-family: var(--font-editorial);
+  font-style: italic;
+}
+
+.bridezilla-form label {
+  color: var(--champagne);
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.55rem;
+  text-transform: uppercase;
+}
+
+.bridezilla-input {
+  background: rgb(247 243 239 / 95%);
+  min-height: 7rem;
+}
+
+.bridezilla-form-footer {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 0.8rem;
+}
+
+.bridezilla-form-footer > p {
+  color: var(--taupe);
+  font-size: 0.72rem;
+}
+
+.bridezilla-submit {
+  align-items: center;
+  background: var(--mauve);
+  border: 1px solid var(--mauve);
+  border-radius: 2px;
+  color: var(--charcoal);
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.68rem;
+  font-weight: 800;
+  gap: 0.65rem;
+  justify-content: center;
+  letter-spacing: 0.11em;
+  min-height: 2.9rem;
+  padding: 0.65rem 1rem;
+  text-transform: uppercase;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.bridezilla-submit:hover:not(:disabled) {
+  background: var(--champagne);
+  border-color: var(--champagne);
+}
+
+.bridezilla-submit:focus-visible {
+  outline: 3px solid var(--champagne);
+  outline-offset: 3px;
+}
+
+.bridezilla-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.bridezilla-error {
+  background: rgb(112 47 51 / 28%);
+  border-left: 3px solid #d0999c;
+  color: #f3dcde;
+  font-size: 0.82rem;
+  margin-top: 0.9rem;
+  padding: 0.7rem 0.85rem;
+}
+
 ::selection {
   background: var(--mauve);
   color: var(--charcoal);
@@ -819,6 +1031,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-bottom: 0;
     border-right: 1px solid var(--taupe);
   }
+
+  .bridezilla-panel {
+    align-items: start;
+    grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
+  }
 }
 
 @media (max-width: 39.999rem) {
@@ -833,6 +1050,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .task-title-row {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .bridezilla-intro {
+    display: block;
+  }
+
+  .bridezilla-mark {
+    margin-bottom: 1rem;
+  }
+
+  .bridezilla-form-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .bridezilla-submit {
+    width: 100%;
   }
 }
 
