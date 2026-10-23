@@ -1106,3 +1106,65 @@
 - **Task:** Explain where to create a project API key and how to identify an available model ID using official OpenAI resources.
 - **Format:** Provide concise dashboard navigation and safe `.env` setup guidance with official links.
 - **Constraints:** Do not inspect, request, expose, or log the credential value; do not modify `.env`, application code, dependencies, database state, or Git history.
+
+## 38. Add BrideZilla input, output, and failure guardrails
+
+### Exact prompt
+
+> Improve the reliability of the existing BrideZilla AI chatbot in Ever After Planner.
+>
+> The first live OpenAI API call has been tested successfully. Preserve the working chat interface and existing functionality.
+>
+> Follow AGENTS.md, read the relevant bundled Next.js 16 documentation, and append this exact prompt to prompt-history.md.
+>
+> Implement the three guardrail categories required by the Week 6 curriculum:
+>
+> 1. INPUT GUARDRAIL
+>
+> - Reject empty or whitespace-only messages.
+> - Enforce a maximum input length of 2,000 characters on both the client and server.
+> - Show clear, helpful validation messages.
+> - Never call the OpenAI API for rejected input.
+>
+> 2. OUTPUT GUARDRAIL
+>
+> - Check that the AI response contains usable, nonempty text before displaying it.
+> - Enforce a reasonable maximum response length.
+> - If the response is missing, malformed, or unusable, display a friendly error rather than presenting broken output.
+> - Do not expose raw API responses or sensitive details to the browser.
+> - Preserve the existing BrideZilla system prompt for now so we can test prompt changes separately.
+>
+> 3. FAILURE GUARDRAIL
+>
+> - Handle API errors, network failures, and rate-limit responses without crashing the application.
+> - Add a reasonable request timeout.
+> - Display helpful, user-friendly messages when the AI is unavailable or taking too long.
+> - Allow users to retry their messages.
+> - Keep the existing wedding task tracker functional even if the AI service fails.
+>
+> Additional requirements:
+>
+> - Preserve the existing server-side OpenAI Responses API integration.
+> - Keep API credentials server-side and never display or log secret values.
+> - Avoid unnecessary dependencies.
+> - Do not add conversation memory or additional AI features.
+> - Do not redesign BrideZilla yet.
+> - Do not modify the database schema, Prisma configuration, or existing CRUD operations.
+> - Do not run migrations, commit, or push.
+>
+> Verification:
+>
+> - Run TypeScript, ESLint, and production build checks.
+> - Review and summarize the diff.
+> - Explain where each guardrail is implemented.
+> - Provide clear manual tests for invalid input, invalid AI output, API failure, timeout, and rate limits.
+> - Explain how failures can be simulated safely without exposing credentials or repeatedly making paid API calls.
+>
+> Report the results and identify anything that still requires manual testing.
+
+### Inferred details
+
+- **Context:** BrideZilla has completed its first successful live request and now needs curriculum-required reliability controls without changing the established single-turn experience.
+- **Task:** Add coordinated client/server input limits, validate and bound Responses API output, classify safe failure messages, time out stalled requests, and preserve retryable input.
+- **Format:** Keep guardrail constants shared, retain the existing interface and server-only system prompt, and provide focused verification and manual simulation guidance.
+- **Constraints:** Do not expose credentials or raw provider details, add memory or unrelated features, redesign the interface, change Prisma or CRUD behavior, install dependencies, run migrations, commit, or push.

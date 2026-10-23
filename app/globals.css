@@ -933,9 +933,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-top: 0.8rem;
 }
 
-.bridezilla-form-footer > p {
+.bridezilla-form-meta p {
   color: var(--taupe);
   font-size: 0.72rem;
+}
+
+.bridezilla-form-meta p + p {
+  margin-top: 0.2rem;
 }
 
 .bridezilla-submit {
