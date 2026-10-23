@@ -952,3 +952,72 @@
 - **Task:** Provide a shared fixed category list in both forms and enforce it server-side while allowing an existing legacy category to remain selected during an update.
 - **Format:** Update the server actions and form controls, add one shared category constant, and document the change with checks and a focused diff summary.
 - **Constraints:** Keep the Prisma schema, saved records, CRUD behavior, styling, and task grouping unchanged; add no dependencies; do not run migrations, commit, or push.
+
+## 33. Verify workspace readiness for Week 6 AI integration
+
+### Exact prompt
+
+> Verify that you have access to the complete Ever After Planner project at C:\Users\amber\desktop\Projects\week-5-build.
+>
+> Before making changes:
+>
+> 1. Confirm the workspace root.
+> 2. Confirm that AGENTS.md, package.json, app/, lib/, prisma/, .gitignore, and prompt-history.md are accessible.
+> 3. Confirm the active Git branch is week-6-bridezilla.
+> 4. Read AGENTS.md and follow its project workflow instructions.
+> 5. Verify that the existing local .env file is ignored by Git without displaying or reading any secret values.
+>
+> Do not modify application files, install dependencies, or run migrations.
+>
+> Do not display secrets or connection strings.
+>
+> Follow AGENTS.md regarding prompt logging, but make no other changes.
+>
+> Report whether the workspace is ready for Week 6 AI integration.
+
+### Inferred details
+
+- **Context:** The Ever After Planner workspace must be validated before beginning Week 6 AI integration work.
+- **Task:** Confirm the project root, required paths, active branch, project instructions, and Git-ignore protection for the local `.env` file.
+- **Format:** Provide a concise readiness report with evidence from read-only filesystem and Git checks.
+- **Constraints:** Append only this prompt-history entry; do not inspect or display `.env` contents or connection strings, modify application files, install dependencies, run migrations, commit, or push.
+
+## 34. Prepare server-side OpenAI API environment configuration
+
+### Exact prompt
+
+> Prepare Ever After Planner for BrideZilla's server-side OpenAI API integration.
+>
+> The project is on the week-6-bridezilla branch. The local .env file already exists and is Git-ignored.
+>
+> Follow AGENTS.md and read the relevant bundled Next.js 16 documentation before making changes.
+>
+> Tasks:
+>
+> 1. Verify that OPENAI_API_KEY is the appropriate environment variable for server-side use.
+> 2. Confirm that .env is ignored by Git without reading or displaying its contents.
+> 3. Explain how I can manually add OPENAI_API_KEY to the existing .env file without disturbing my Neon database configuration.
+> 4. Check whether a safe placeholder-only environment template would be useful. Create one only if appropriate.
+> 5. Explain how we will keep the key out of browser code and API responses.
+>
+> Constraints:
+>
+> - Never read, print, copy, or log secret values.
+> - Do not modify my existing .env file.
+> - Do not ask me to paste an API key into Codex.
+> - Do not install dependencies.
+> - Do not create an AI endpoint or chatbot yet.
+> - Do not change existing CRUD functionality, styling, or Prisma files.
+> - Do not run migrations.
+> - Append this prompt to prompt-history.md following AGENTS.md.
+>
+> Report your findings and any file changes.
+>
+> Do not commit or push.
+
+### Inferred details
+
+- **Context:** BrideZilla will add a server-only OpenAI integration while preserving the existing Neon-backed planner and keeping credentials confidential.
+- **Task:** Validate the standard OpenAI key variable and Next.js environment behavior, verify Git protection for `.env`, document safe manual setup, and add a non-secret environment template if useful.
+- **Format:** Provide a concise security and setup report, plus focused configuration and prompt-history changes.
+- **Constraints:** Never inspect, expose, copy, or log secrets; do not modify `.env`, install dependencies, create an AI endpoint or chatbot, alter CRUD, styling, or Prisma files, run migrations, commit, or push.
