@@ -1273,3 +1273,152 @@
 - **Task:** Move the single existing chat instance into a fixed right-side drawer with an accessible launcher, responsive sizing, scroll containment, Escape handling, focus trapping, and focus restoration.
 - **Format:** Extend the existing client shell and palette with focused React and CSS changes, keeping the dashboard and chat implementation intact.
 - **Constraints:** Do not alter the AI route, prompt, guardrails, task CRUD, Prisma, database state, dependencies, pages, authentication, themes, or Git history; run TypeScript, ESLint, build, and diff checks.
+
+## 41. Polish the presentation-ready interface
+
+### Exact prompt
+
+> Polish the existing Ever After Planner interface for an upcoming live presentation.
+>
+> **Context**
+>
+> - This is a working Next.js 16 wedding-planning application.
+> - The app now has a responsive, collapsible left sidebar and a floating BrideZilla chat drawer.
+> - Wedding Task CRUD and the BrideZilla AI integration are functional.
+> - Follow AGENTS.md and append this exact prompt to prompt-history.md using the established format.
+>
+> **Goal**\
+> Make the existing application feel cohesive, sophisticated, and presentation-ready, using an elegant Gothic Romance aesthetic.
+>
+> **Visual direction**
+>
+> - Refined charcoal, deep plum, muted burgundy, mauve, ivory, and restrained champagne-gold accents.
+> - Elegant editorial typography and strong visual hierarchy.
+> - Subtle borders, tasteful spacing, soft depth, and consistent corner treatments.
+> - Romantic Gothic styling that feels sophisticated rather than cartoonish or overly Halloween-themed.
+> - Preserve good contrast and readability.
+>
+> **Task**
+>
+> 1. Review the existing dashboard, Wedding Tasks section, sidebar, and BrideZilla launcher/drawer for visual inconsistencies.
+> 2. Create a cohesive layout with consistent spacing, typography, colors, button treatments, form controls, and card styling.
+> 3. Refine the application header and dashboard introduction so the page immediately communicates that this is a polished wedding-planning workspace.
+> 4. Improve the visual presentation of existing task forms and task lists, including the distinction between active and completed tasks.
+> 5. Polish the sidebar's expanded, collapsed, active, hover, and disabled navigation states.
+> 6. Refine the floating BrideZilla pill and chat drawer so they feel integrated into the design.
+> 7. Make sure the overall composition works on desktop, tablet, and mobile.
+> 8. Prefer CSS and existing assets. Avoid decorative clutter, excessive animation, or large changes to component structure.
+>
+> **Constraints**
+>
+> - This is a visual-polish pass, not a feature build.
+> - Do not add new pages, dashboard widgets, placeholder statistics, or unfinished functionality.
+> - Do not implement theme switching, persistent chat history, authentication, or new AI capabilities.
+> - Do not modify database models, migrations, API behavior, guardrails, or CRUD logic.
+> - Do not install new dependencies unless absolutely necessary; explain any such need before proceeding.
+> - Preserve all accessibility and keyboard interactions.
+> - Keep changes tightly scoped and do not create Git commits.
+>
+> **Verification**
+>
+> - Run TypeScript, ESLint, production build, and git diff --check.
+> - Confirm all existing functionality remains intact.
+> - Summarize the visual refinements, changed files, validation results, and any remaining browser checks.
+
+### Inferred details
+
+- **Context:** Ever After Planner has all presentation features in place and needs a final visual-system pass across the dashboard, task workflow, navigation shell, and BrideZilla drawer.
+- **Task:** Harmonize existing color, typography, spacing, controls, cards, interaction states, and responsive presentation while strengthening the dashboard introduction and active/completed task hierarchy.
+- **Format:** Prefer shared CSS tokens and existing class hooks, with only minimal copy or markup adjustments needed for clearer editorial hierarchy.
+- **Constraints:** Preserve all behavior, accessibility, CRUD and AI logic, data models, API routes, guardrails, pages, dependencies, and Git history; avoid new functionality, clutter, or excessive motion and run all requested checks.
+
+## 42. Fix the CSS parsing and build error
+
+### Exact prompt
+
+> Fix the CSS parsing/build error in Ever After Planner.
+>
+> **Context**\
+> Next.js 16.4.2 (Turbopack) reports:
+>
+> - File: app/globals.css
+> - Error near generated CSS line 1724
+> - "Unexpected end of input"
+> - The output ends near a closing brace followed by `display: inline-flex;`
+>
+> **Task**
+>
+> 1. Inspect the end of app/globals.css and the surrounding CSS rules.
+> 2. Identify the exact syntax error, including any missing selector, opening brace, closing brace, or incomplete declaration.
+> 3. Apply the smallest correct fix that preserves the intended styling.
+> 4. Check for other malformed or incomplete CSS rules caused by the recent visual changes.
+> 5. Follow AGENTS.md and append this prompt to prompt-history.md.
+>
+> **Constraints**
+>
+> - Do not redesign any components.
+> - Do not rewrite or broadly reorganize globals.css.
+> - Do not modify application logic, BrideZilla, APIs, Prisma, or dependencies.
+> - Do not discard unrelated visual changes.
+> - Do not create a Git commit.
+>
+> **Verification**
+>
+> - Run the TypeScript check, ESLint, and production build.
+> - Run git diff --check.
+> - Report the root cause, exact CSS fix, files changed, and verification results.
+
+### Inferred details
+
+- **Context:** Turbopack encountered an orphaned CSS declaration at the end of the recently polished global stylesheet and retained the resulting parsing error in the active development server.
+- **Task:** Confirm the malformed tail, remove only the selectorless declaration if still present, audit adjacent media blocks, and prove the stylesheet parses in the production pipeline.
+- **Format:** Report the precise parser cause, minimal correction, limited file impact, and requested verification commands.
+- **Constraints:** Do not redesign, reorganize CSS broadly, alter behavior or integrations, discard visual work, add dependencies, or create Git history.
+
+## 43. Resolve the PostgreSQL SSL security warning
+
+### Exact prompt
+
+> Investigate and resolve the PostgreSQL SSL security warning in Ever After Planner.
+>
+> **Context**\
+> Next.js 16.4.2 reports a warning from pg-connection-string about sslmode=prefer, require, or verify-ca being treated as verify-full.
+>
+> The warning surfaces while rendering WeddingTaskList in app/page.tsx.
+>
+> This project uses Prisma 7, @prisma/adapter-pg, and Neon PostgreSQL.
+>
+> Follow AGENTS.md and append this prompt to prompt-history.md.
+>
+> **Task**
+>
+> 1. Inspect the existing database connection setup and identify which environment variable and PostgreSQL driver are responsible.
+> 2. Check whether the application currently uses sslmode=require or another legacy SSL setting.
+> 3. If compatible with the existing Neon configuration, change the relevant connection string SSL mode to verify-full while preserving all other parameters and connection settings.
+> 4. Preserve the current distinction between pooled and direct database connections.
+> 5. Check that the application can still read wedding tasks.
+> 6. Explain the warning's root cause and whether the fix requires restarting the Next.js development server.
+>
+> **Constraints**
+>
+> - Never print or log database connection strings, passwords, credentials, or secrets.
+> - Never place connection credentials in tracked files or prompt-history.md.
+> - Do not disable TLS or certificate verification.
+> - Do not suppress the warning without addressing its cause.
+> - Do not change Prisma models, migrations, CRUD behavior, or AI functionality.
+> - Do not install or upgrade dependencies.
+> - Do not commit any changes.
+>
+> **Verification**
+>
+> - Run TypeScript, ESLint, and production build.
+> - Verify database connectivity without modifying existing records.
+> - Run git diff --check.
+> - Report the root cause, the configuration changed (without secrets), and the verification results.
+
+### Inferred details
+
+- **Context:** The Prisma 7 `@prisma/adapter-pg` runtime path reaches Neon through node-postgres and emits a forward-compatibility warning when a legacy SSL-mode label is parsed.
+- **Task:** Identify the pooled and direct connection paths, safely detect their SSL modes, explicitly preserve full certificate and hostname verification for runtime queries, and verify a read-only WeddingTask query.
+- **Format:** Make a minimal server-side configuration adjustment and report the cause, safe configuration details, validation results, and restart guidance without exposing connection data.
+- **Constraints:** Do not reveal or track credentials, weaken TLS, change database schema or records, alter CRUD or AI behavior, install packages, migrate, commit, or push.

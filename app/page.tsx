@@ -235,6 +235,7 @@ export default function Home() {
             </div>
 
             <div className="hero-grid">
+              <p className="hero-kicker">Your wedding planning workspace</p>
               <h1 className="display-heading">
                 <span>Your celebration,</span>
                 <span>
@@ -243,10 +244,9 @@ export default function Home() {
               </h1>
               <div className="hero-copy">
                 <p>
-                  A calm, considered place to shape the day—from the first
-                  meaningful decision to the final finishing touch.
+                  A private, beautifully organized place to shape the day—from
+                  the first meaningful decision to the final finishing touch.
                 </p>
-                {/* <p className="hero-note">Made for every way you celebrate.</p> */}
               </div>
             </div>
           </header>
