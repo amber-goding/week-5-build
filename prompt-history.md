@@ -1566,3 +1566,57 @@
 - **Task:** Connect this application using the supported Clerk setup workflow.
 - **Format:** Continue the authentication foundation and report its configuration and verification results.
 - **Constraints:** Use the selected existing development application only; retain all constraints in entries 45 and 46 and never disclose credentials.
+
+## 48. Authenticate BrideZilla API requests
+
+### Exact prompt
+
+> # Milestone 1 — Step 3: Authenticate BrideZilla API Requests
+>
+> **Context**
+>
+> Ever After Planner is a Next.js 16 application using Clerk, Prisma 7, Neon PostgreSQL, and the OpenAI API.
+>
+> Clerk email-code and Google authentication have been integrated and manually tested. We are working on the `feature/user-authentication` branch.
+>
+> The existing BrideZilla API works but does not yet require authentication.
+>
+> Follow AGENTS.md and append this exact prompt to prompt-history.md using the established workflow.
+>
+> **Task**
+>
+> 1. Verify the current branch is `feature/user-authentication` and review the working tree.
+> 2. Inspect `app/api/bridezilla/route.ts` and its existing authentication-related dependencies.
+> 3. Use Clerk's supported server-side `auth()` helper to require a valid signed-in user before processing a BrideZilla request or making an OpenAI API call.
+> 4. Return a clear HTTP 401 JSON response when authentication is missing or invalid.
+> 5. Ensure existing input/output limits, timeouts, failure handling, and AI behavior remain intact.
+> 6. Update the BrideZilla chat interface only if necessary to display a friendly sign-in-required message.
+> 7. Follow the project's applicable Next.js and Clerk documentation.
+>
+> **Constraints**
+>
+> - Protect only the BrideZilla API and its directly related interface behavior.
+> - Do not modify WeddingTask queries, forms, or CRUD server actions.
+> - Do not modify Prisma models or run migrations.
+> - Do not change the OpenAI model, system prompt, or existing guardrails.
+> - Do not implement conversation history, new AI features, or a usage-limit database.
+> - Do not make paid OpenAI requests during automated testing.
+> - Do not expose API keys or authentication credentials.
+> - Do not switch branches, commit, or push.
+> - Do not redesign the chat drawer.
+>
+> **Verification**
+>
+> 1. Verify unauthenticated requests receive HTTP 401 without reaching OpenAI.
+> 2. Verify authenticated requests reach the existing request-validation logic using mocked OpenAI responses.
+> 3. Verify no authentication bypass is introduced.
+> 4. Run TypeScript, ESLint, production build, and git diff --check.
+> 5. Report changed files, test results, and remaining security limitations.
+> 6. Confirm that durable rate limiting and WeddingTask ownership are still separate, unfinished milestones.
+
+### Inferred details
+
+- **Context:** Clerk sign-in is established, but the paid BrideZilla endpoint still allows anonymous requests.
+- **Task:** Require a verified Clerk user session before parsing messages or contacting OpenAI, retain safe JSON failures, and verify authenticated behavior using isolated mocks.
+- **Format:** Report the focused diff, automated and HTTP verification, remaining manual checks, and unfinished security milestones.
+- **Constraints:** Preserve task data access, Prisma, AI configuration, prompts, guardrails, and drawer design. Do not make paid test requests, expose credentials, add unrelated features, migrate, switch branches, commit, or push.

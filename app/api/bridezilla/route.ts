@@ -1,5 +1,7 @@
 import "server-only";
 
+import { auth } from "@clerk/nextjs/server";
+
 import {
   BRIDEZILLA_MAX_INPUT_LENGTH,
   BRIDEZILLA_MAX_RESPONSE_LENGTH,
@@ -93,6 +95,25 @@ function extractResponseText(payload: unknown) {
 }
 
 export async function POST(request: Request) {
+  try {
+    const { userId } = await auth({
+      acceptsToken: "session_token",
+      treatPendingAsSignedOut: true,
+    });
+
+    if (!userId) {
+      return Response.json(
+        { error: "Please sign in to use BrideZilla, then try again." },
+        { status: 401 },
+      );
+    }
+  } catch {
+    return Response.json(
+      { error: "BrideZilla could not verify your session. Please try again shortly." },
+      { status: 503 },
+    );
+  }
+
   let body: unknown;
 
   try {
