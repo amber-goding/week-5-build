@@ -1422,3 +1422,56 @@
 - **Task:** Identify the pooled and direct connection paths, safely detect their SSL modes, explicitly preserve full certificate and hostname verification for runtime queries, and verify a read-only WeddingTask query.
 - **Format:** Make a minimal server-side configuration adjustment and report the cause, safe configuration details, validation results, and restart guidance without exposing connection data.
 - **Constraints:** Do not reveal or track credentials, weaken TLS, change database schema or records, alter CRUD or AI behavior, install packages, migrate, commit, or push.
+
+## 44. Inspect authentication and private data ownership readiness
+
+### Exact prompt
+
+> **Context**\
+> Ever After Planner is an existing Next.js 16 App Router, TypeScript, Prisma 7, and Neon PostgreSQL application. It currently has working Wedding Task CRUD, a server-side BrideZilla AI integration, and a responsive planning interface.
+>
+> We are beginning Milestone 1: individual user authentication and private data ownership. The confirmed requirements are email-based sign-in, Google sign-in, secure sessions, and private wedding-planning data.
+>
+> Follow AGENTS.md. Append this prompt as the next sequential entry in prompt-history.md using the established Context/Task/Format/Constraints format.
+>
+> **Task**
+>
+> 1. Inspect the existing Next.js, Prisma, Neon, environment-variable, and application structure. Read the project's applicable Next.js documentation as required by AGENTS.md.
+> 2. Identify all routes, server actions, database queries, and API endpoints that currently access wedding data or invoke BrideZilla.
+> 3. Determine whether any authentication or user-ownership functionality already exists.
+> 4. Compare two suitable maintained authentication solutions for this specific stack, including support for email-based authentication, Google sign-in, Prisma/Neon integration, session management, and deployment.
+> 5. Recommend the simplest secure solution. Explain whether email authentication should use passwords, verification codes, or magic links.
+> 6. Inspect the WeddingTask model and existing database-access patterns. Explain how existing task records could be preserved and assigned to an account safely, without performing any migration.
+> 7. Identify authorization risks, including direct server action/API access and the paid BrideZilla endpoint.
+> 8. Inspect the current Git branch, working tree, and uncommitted changes.
+> 9. Propose the smallest safe implementation sequence, with independently verifiable steps.
+>
+> **Constraints**
+>
+> - Inspection only, except the required prompt-history entry.
+> - Do not install dependencies or change application code.
+> - Do not edit environment files or print secrets.
+> - Do not create users, database tables, or migrations.
+> - Do not modify or delete existing wedding tasks.
+> - Do not perform database writes or paid AI requests.
+> - Do not commit, push, or switch branches.
+> - Do not implement authentication yet.
+> - Avoid unrelated refactoring or new functionality.
+>
+> **Format**\
+> Return a concise report with:
+>
+> 1. Current architecture and authentication status.
+> 2. Authentication solution comparison and recommendation.
+> 3. Routes and server operations requiring protection.
+> 4. Existing wedding-data ownership and migration considerations.
+> 5. Git branch and working-tree status.
+> 6. Proposed next implementation step.
+> 7. Any risks or decisions requiring approval before implementation.
+
+### Inferred details
+
+- **Context:** The working single-workspace planner is beginning individual authentication and private ownership, with existing tasks that have no owner field.
+- **Task:** Audit application entry points and data access, compare maintained authentication providers, recommend an email sign-in method, and plan a safe ownership transition without implementing it.
+- **Format:** Provide a concise seven-part report covering architecture, provider comparison, protection requirements, existing-data handling, Git status, implementation sequence, and approval decisions.
+- **Constraints:** Only append this history entry; do not change application or environment files, install packages, create users or migrations, access paid AI, write database records, or change Git history or branches. Never expose secrets.
