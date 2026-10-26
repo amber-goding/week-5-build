@@ -1475,3 +1475,94 @@
 - **Task:** Audit application entry points and data access, compare maintained authentication providers, recommend an email sign-in method, and plan a safe ownership transition without implementing it.
 - **Format:** Provide a concise seven-part report covering architecture, provider comparison, protection requirements, existing-data handling, Git status, implementation sequence, and approval decisions.
 - **Constraints:** Only append this history entry; do not change application or environment files, install packages, create users or migrations, access paid AI, write database records, or change Git history or branches. Never expose secrets.
+
+## 45. Begin the Clerk authentication foundation
+
+### Exact prompt
+
+> # Milestone 1 — Step 2: Clerk Authentication Foundation
+>
+> **Context**
+>
+> Ever After Planner is an existing Next.js 16.4.2 App Router application using TypeScript, Prisma 7, and Neon PostgreSQL.
+>
+> The application already includes working Wedding Task CRUD, a responsive sidebar, and BrideZilla AI integration.
+>
+> We are implementing individual user authentication using Clerk, with email verification codes and Google sign-in.
+>
+> The current Git branch must be `feature/user-authentication`, created from `week-6-bridezilla`.
+>
+> Follow AGENTS.md and append this exact prompt to prompt-history.md using the established Context/Task/Format/Constraints workflow.
+>
+> **Task**
+>
+> 1. Verify that the current Git branch is `feature/user-authentication` and inspect the working tree. Do not switch branches or overwrite unrelated changes.
+> 2. Review the current official Clerk Next.js integration instructions and the applicable bundled Next.js 16 documentation.
+> 3. Connect the project to my existing Clerk development application using the supported setup workflow. Request my participation for any interactive authentication or application-selection steps. Do not create another Clerk application without explicit approval.
+> 4. Install and configure the necessary Clerk Next.js SDK.
+> 5. Configure `ClerkProvider` in the application layout and the appropriate `proxy.ts` integration for Next.js 16.
+> 6. Add minimal, accessible sign-in, sign-up, and signed-in account controls that fit the existing interface.
+> 7. Ensure Clerk environment variables are configured securely using ignored local environment files. Do not print, log, or commit credentials.
+> 8. Account for the application's enabled Next.js Cache Components configuration and appropriate Suspense boundaries.
+> 9. Preserve all existing wedding-planning and BrideZilla functionality.
+>
+> **Constraints**
+>
+> - Work only on `feature/user-authentication`.
+> - Do not switch, merge, or create branches.
+> - Do not modify Prisma models or create/apply database migrati
+
+### Inferred details
+
+- **Context:** Clerk has been selected for the authentication foundation, using an existing development application and the dedicated feature branch.
+- **Task:** Verify the branch and setup requirements, then connect the selected Clerk application and integrate its SDK, provider, proxy, and account controls after receiving the complete constraints.
+- **Format:** Follow the established prompt-history workflow and report implementation and verification outcomes.
+- **Constraints:** Preserve existing functionality, keep credentials private and in ignored files, use only the specified branch, and do not create another Clerk application. The received prompt ends mid-word in the database-migration constraint; request the remainder before implementation.
+
+## 46. Complete Clerk foundation constraints and verification requirements
+
+### Exact prompt
+
+> Constraints
+> - Work only on feature/user-authentication.
+> - Do not switch, merge, or create branches.
+> - Do not modify Prisma models or create/apply database migrations.
+> - Do not modify existing wedding-task records.
+> - Do not change Wedding Task CRUD logic or database queries.
+> - Do not modify BrideZilla's API route, AI prompts, or guardrails.
+> - Do not implement user-based database authorization yet; that is a separate reviewed step.
+> - Do not create production Clerk resources or configure deployment.
+> - Do not introduce unrelated dependencies, features, or visual redesigns.
+> - Do not create Git commits or push changes.
+> - Stop and report unexpected setup requirements rather than making assumptions.
+> Verification
+> 1. Run Clerk setup diagnostics if supported.
+> 2. Run TypeScript checks, ESLint, and the production build.
+> 3. Run git diff --check.
+> 4. Verify that authentication components render without disrupting the existing application.
+> 5. Identify any required manual testing for email verification, Google sign-in, sign-out, and expired sessions.
+> 6. Report all changed files, installed dependencies, configuration changes, verification results, and remaining issues.
+> 7. Clearly identify which application routes, server actions, and API endpoints remain unprotected.
+> Expected Result
+> A working Clerk authentication foundation with sign-in, sign-up, and account controls, while preserving the existing application.
+> Authentication is not considered fully secure until the subsequent authorization and user-data ownership milestones are completed.
+
+### Inferred details
+
+- **Context:** This completes the truncated constraints for the Clerk authentication foundation requested in entry 45.
+- **Task:** Connect the existing development application and add authentication controls without implementing ownership or altering existing task and AI operations.
+- **Format:** Report changed files, dependencies, configuration, diagnostics, TypeScript/ESLint/build/diff results, manual checks, and remaining public operations.
+- **Constraints:** Work only on the existing feature branch; preserve task records, queries, CRUD, Prisma, and BrideZilla. Do not migrate, deploy, create production resources, commit, or push. Stop for unexpected requirements and keep credentials private.
+
+## 47. Select the existing Clerk development application
+
+### Exact prompt
+
+> Use Ever After Planner development
+
+### Inferred details
+
+- **Context:** Clerk CLI authentication succeeded and the existing Ever After Planner development application was presented for selection.
+- **Task:** Connect this application using the supported Clerk setup workflow.
+- **Format:** Continue the authentication foundation and report its configuration and verification results.
+- **Constraints:** Use the selected existing development application only; retain all constraints in entries 45 and 46 and never disclose credentials.

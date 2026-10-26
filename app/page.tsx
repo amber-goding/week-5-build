@@ -2,6 +2,7 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 
 import { AddWeddingTaskForm } from "@/app/add-wedding-task-form";
+import { AccountControls } from "@/app/account-controls";
 import { EditWeddingTaskForm } from "@/app/edit-wedding-task-form";
 import { PlannerShell } from "@/app/planner-shell";
 import { prisma } from "@/lib/prisma";
@@ -231,7 +232,7 @@ export default function Home() {
                   <p className="brand-subtitle">Wedding planner</p>
                 </div>
               </div>
-              <p className="journal-label">A private planning journal</p>
+              <AccountControls />
             </div>
 
             <div className="hero-grid">
